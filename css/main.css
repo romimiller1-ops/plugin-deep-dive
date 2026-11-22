@@ -893,6 +893,7 @@ pre {
 
 .watch-cue {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   margin: 2rem 0 1rem;
@@ -902,6 +903,12 @@ pre {
 
 .watch-cue .bi {
   color: var(--mint);
+}
+
+/* Narration credit next to the video heading: same colour, smaller and lighter than the heading. */
+.watch-cue__credit {
+  font-size: var(--text-min);
+  font-weight: 400;
 }
 
 /* Transcript toggle: looks like a real button, pulses three times when first seen. */
