@@ -150,7 +150,7 @@ Dive.logbook = (function () {
     element.classList.toggle("is-valid", Boolean(correct));
   }
 
-  /* First track: a wrong answer in a dropdown or number field turns red (the feedback under it explains why). */
+  /* A wrong answer in a dropdown or number field turns red (the feedback under it explains why). */
   function markResult(element, status) {
     markCorrect(element, status === "ok");
     element.classList.toggle("is-wrong-answer", status === "bad");
@@ -443,7 +443,7 @@ Dive.logbook = (function () {
       finishCheck(results, problems, { pairs: Object.assign({}, match.pairs()), stage: stage.value, picked: picked, pick: pick }, function () {
         setFeedback("r-match", results.match.status, match.feedback(results.match));
         setFeedback("r-stage", results.stage.status, cfg.stage.feedback[results.stage.value]);
-        markCorrect(stage, results.stage.status === "ok");
+        markResult(stage, results.stage.status);
         setFeedback("r-checks", results.checks.status, checksFeedback(results.checks, picked, cfg.checks, labelFor));
         markChecks("[data-r-check]", "data-r-check", picked, cfg.checks);
         document.querySelectorAll("[data-r-pick]").forEach(function (row) {
@@ -456,7 +456,7 @@ Dive.logbook = (function () {
     }
 
     function listen() {
-      document.getElementById("r-stage").addEventListener("change", function () { markCorrect(this, false); markStale("r-stage"); });
+      document.getElementById("r-stage").addEventListener("change", function () { markResult(this, null); markStale("r-stage"); });
       document.querySelectorAll("[data-r-check] input").forEach(function (box) {
         box.addEventListener("change", function () {
           markStale("r-checks");
@@ -481,7 +481,7 @@ Dive.logbook = (function () {
         match.reset();
         document.querySelectorAll("[data-r-check], [data-r-pick]").forEach(function (row) { row.classList.remove("is-right", "is-wrong"); });
         markField(document.getElementById("r-stage"), false);
-        markCorrect(document.getElementById("r-stage"), false);
+        markResult(document.getElementById("r-stage"), null);
       },
       links: function (result, wreckScore) {
         var links = [];

@@ -46,6 +46,7 @@
   --chat-top: #23235a;
   --skin: #f2c9a8;
   --notice-bg: #fff4cc;
+  --pick-tint: #d4f1f7;
   --card-refresh: #14283f;
 
   --panel-bg: rgb(25 24 52 / 92%);
@@ -3275,10 +3276,12 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
   display: inline-flex;
 }
 
-.file-chip--spot.is-flagged {
-  border-color: var(--signal);
-  border-style: dashed;
-  box-shadow: 0 0 0 2px var(--signal);
+/* A file the learner marked: light-blue fill, so the choice stands out from the files left unmarked. */
+.file-chip--spot.is-flagged,
+.file-chip--spot.is-flagged:hover {
+  border-color: var(--cyan);
+  background: var(--pick-tint);
+  box-shadow: 0 0 0 2px var(--cyan);
 }
 
 /* ---------- Refresh: where does the path break? ---------- */
@@ -4131,7 +4134,8 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
   background-color: var(--bad-tint);
 }
 
-/* After the identification check, the result colour wins over the orange "flagged" look. */
+/* After the identification check the result colour wins on the frame; a marked file keeps its light-blue fill,
+   and every file gets a round ✓ (right call) or ✗ (wrong call). */
 .file-chip--spot.is-right,
 .file-chip--spot.is-flagged.is-right {
   border: 2px solid var(--ok);
@@ -4142,6 +4146,22 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
 .file-chip--spot.is-flagged.is-wrong {
   border: 2px dashed var(--bad);
   box-shadow: 0 0 0 2px var(--bad);
+}
+
+.file-chip--spot.is-right::before,
+.file-chip--spot.is-wrong::before {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--ok-soft);
+  line-height: 1;
+}
+
+.file-chip--spot.is-wrong::before {
+  background: var(--bad-soft);
 }
 
 /* A floated legend sits inside the card instead of on its border line. */
