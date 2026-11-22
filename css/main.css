@@ -47,6 +47,7 @@
   --skin: #f2c9a8;
   --notice-bg: #fff4cc;
   --pick-tint: #d4f1f7;
+  --pick-ink: #0e7490;
   --card-refresh: #14283f;
 
   --panel-bg: rgb(25 24 52 / 92%);
@@ -3279,9 +3280,9 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
 /* A file the learner marked: light-blue fill, so the choice stands out from the files left unmarked. */
 .file-chip--spot.is-flagged,
 .file-chip--spot.is-flagged:hover {
-  border-color: var(--cyan);
+  border-color: var(--pick-ink);
   background: var(--pick-tint);
-  box-shadow: 0 0 0 2px var(--cyan);
+  box-shadow: 0 0 0 2px var(--pick-ink);
 }
 
 /* ---------- Refresh: where does the path break? ---------- */
@@ -4135,17 +4136,18 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
 }
 
 /* After the identification check the result colour wins on the frame; a marked file keeps its light-blue fill,
-   and every file gets a round ✓ (right call) or ✗ (wrong call). */
+   and every file gets a solid round ✓ (right call) or ✗ (wrong call). Dark green and red keep at least 5:1
+   against the light-blue fill and the page, and the white mark inside keeps over 6:1. */
 .file-chip--spot.is-right,
 .file-chip--spot.is-flagged.is-right {
-  border: 2px solid var(--ok);
-  box-shadow: 0 0 0 2px var(--ok);
+  border: 2px solid var(--ok-ink);
+  box-shadow: 0 0 0 2px var(--ok-ink);
 }
 
 .file-chip--spot.is-wrong,
 .file-chip--spot.is-flagged.is-wrong {
-  border: 2px dashed var(--bad);
-  box-shadow: 0 0 0 2px var(--bad);
+  border: 2px dashed var(--bad-ink);
+  box-shadow: 0 0 0 2px var(--bad-ink);
 }
 
 .file-chip--spot.is-right::before,
@@ -4156,12 +4158,13 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  background: var(--ok-soft);
+  background: var(--ok-ink);
+  color: var(--white);
   line-height: 1;
 }
 
 .file-chip--spot.is-wrong::before {
-  background: var(--bad-soft);
+  background: var(--bad-ink);
 }
 
 /* A floated legend sits inside the card instead of on its border line. */
