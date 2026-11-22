@@ -25,6 +25,7 @@
 ## הרצה
 
 - **ב־Moodle:** מעלים את קובץ ה־ZIP כפעילות SCORM. קובץ המניפסט (`imsmanifest.xml`) נמצא בשורש החבילה.
+- **באתר החי (בלי LMS):** https://romimiller1-ops.github.io/plugin-deep-dive/
 - **מחוץ למערכת למידה:** פותחים את `index.html` דרך שרת מקומי, למשל `python3 -m http.server`. היחידה עובדת במלואה, ומציגה הודעה שהתשובות והציון לא יישמרו.
 
 ## חיבור ל־LMS (SCORM 1.2)
