@@ -13,7 +13,7 @@
   <meta property="og:locale" content="he_IL">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.rtl.min.css">
-  <link rel="stylesheet" href="css/main.css?v=20261122k">
+  <link rel="stylesheet" href="css/main.css?v=20261122m">
   <script src="js/core/a11y.js?v=20261122i"></script>
   <script defer src="assets/vendor/bootstrap/bootstrap.min.js"></script>
   <script defer src="js/vendor/scorm-api-wrapper.js"></script>
@@ -163,14 +163,15 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="main-menu">
+          <!-- The menu stays empty until a learning track is chosen; then it lists that track's sections. -->
           <ul class="navbar-nav site-nav__links">
-            <li class="nav-item" data-track-only="none first"><a class="nav-link" href="#what-is-plugin" data-nav="what-is-plugin">מה זה פלאגין</a></li>
+            <li class="nav-item" data-track-only="first"><a class="nav-link" href="#what-is-plugin" data-nav="what-is-plugin">מה זה פלאגין</a></li>
             <li class="nav-item" data-track-only="refresh"><a class="nav-link" href="#example" data-nav="example">הדוגמה</a></li>
-            <li class="nav-item" data-track-only="none first"><a class="nav-link" href="#dive" data-nav="dive">מבנה התיקיות</a></li>
-            <li class="nav-item"><a class="nav-link" href="#wreck" data-nav="wreck"><span data-track-only="none first">סידור הקבצים</span><span data-track-only="refresh">בדיקת הסידור</span></a></li>
-            <li class="nav-item" data-track-only="none first"><a class="nav-link" href="#ascent" data-nav="ascent">שלבי הפיתוח</a></li>
+            <li class="nav-item" data-track-only="first"><a class="nav-link" href="#dive" data-nav="dive">מבנה התיקיות</a></li>
+            <li class="nav-item" data-track-only="first refresh"><a class="nav-link" href="#wreck" data-nav="wreck"><span data-track-only="first">סידור הקבצים</span><span data-track-only="refresh">בדיקת הסידור</span></a></li>
+            <li class="nav-item" data-track-only="first"><a class="nav-link" href="#ascent" data-nav="ascent">שלבי הפיתוח</a></li>
             <li class="nav-item" data-track-only="refresh"><a class="nav-link" href="#checks" data-nav="checks">נתיבים ותוצר</a></li>
-            <li class="nav-item"><a class="nav-link" href="#logbook" data-nav="logbook">בדיקת הבנה</a></li>
+            <li class="nav-item" data-track-only="first refresh"><a class="nav-link" href="#logbook" data-nav="logbook">בדיקת הבנה</a></li>
           </ul>
           <!-- On narrow screens these two live in the menu, with their names written out. -->
           <div class="site-nav__menu-tools">
