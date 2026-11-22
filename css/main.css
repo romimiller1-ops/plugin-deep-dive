@@ -2968,17 +2968,6 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
 
 /* ---------- Top bar tools ---------- */
 
-/* The full menu opens from 1200px; below that (and at larger text sizes) it folds behind the menu button. */
-
-@media (min-width: 1400px) {
-  
-
-  .navbar-expand-xxl .track-chip {
-    margin-block: 0;
-    margin-inline-end: 0.5rem;
-  }
-}
-
 /* The three letters grow in fixed steps, so each button shows its own size whatever the current level. */
 
 .text-size__btn:hover {
@@ -3561,25 +3550,21 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
   gap: 4px;
 }
 
-/* Wide screens: the menu sits exactly in the middle of the bar, between the brand and the tools. */
-@media (min-width: 1400px) {
-  .navbar-expand-xxl .site-nav__bar {
-    position: relative;
-    min-height: 64px;
-  }
-
-  .navbar-expand-xxl .site-nav__links {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    align-items: center;
-    transform: translate(-50%, -50%);
-  }
-
-  .navbar-expand-xxl .nav-tools {
+/* When the full menu fits in one row (js/ui/navfit.js adds .navbar-expand), the links spread across
+   the whole bar between the brand and the tools. When it does not fit, it folds behind the menu button. */
+.site-nav.navbar-expand .nav-tools {
   order: 3;
-  margin-inline: auto 0;
+  margin-inline: 0.75rem 0;
 }
+
+.site-nav.navbar-expand .navbar-collapse {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.site-nav.navbar-expand .site-nav__links {
+  flex: 1 1 auto;
+  justify-content: space-evenly;
 }
 
 /* ---------- 60 m → 80 m: the two sub-folders hang from the section above ---------- */

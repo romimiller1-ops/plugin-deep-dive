@@ -3,18 +3,10 @@
 window.Dive = window.Dive || {};
 
 Dive.textSizeControl = (function () {
-  /* The full menu opens on wide screens at normal size; with bigger text it always folds behind the menu button. */
-  var NAV_EXPAND = { normal: "navbar-expand-xxl", medium: "", large: "" };
-
   function render(level) {
     document.querySelectorAll(".text-size__btn").forEach(function (button) {
       button.setAttribute("aria-pressed", String(button.dataset.size === level));
     });
-    var nav = document.querySelector(".site-nav");
-    nav.classList.remove("navbar-expand-xxl");
-    if (NAV_EXPAND[level]) {
-      nav.classList.add(NAV_EXPAND[level]);
-    }
   }
 
   function init() {

@@ -50,6 +50,7 @@
   Dive.ambient.init();
   Dive.glossary.init();
   Dive.textSizeControl.init();
+  Dive.navFit.init();
   Dive.scratch.init();
   Dive.explore.init();
   Dive.quickchecks.init();

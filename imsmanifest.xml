@@ -61,6 +61,7 @@
       <file href="js/motion/engine.js"/>
       <file href="js/ui/glossary.js"/>
       <file href="js/ui/textsize.js"/>
+      <file href="js/ui/navfit.js"/>
       <file href="js/ui/tooltip.js"/>
     </resource>
   </resources>

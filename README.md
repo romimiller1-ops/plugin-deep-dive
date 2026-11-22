@@ -63,6 +63,7 @@ js/games/*.js              the interactive activities
 js/motion/*.js             depth gauge and background motion
 js/ui/glossary.js          glossary terms and side panel
 js/ui/textsize.js          text-size buttons
+js/ui/navfit.js            top menu: full when it fits, folded otherwise
 js/ui/tooltip.js           accessible tooltips for the icon buttons
 js/vendor/                 pipwerks SCORM wrapper
 assets/                    favicon, font, video, Bootstrap (with licenses)
