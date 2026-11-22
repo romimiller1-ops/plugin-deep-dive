@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>צוללים לתוך פלאגין | מבנה הפלאגין ושלבי הפיתוח שלו</title>
+  <meta name="description" content="יחידת לימוד אינטראקטיבית לאנשי למידה ארגונית: מהו פלאגין ב־ChatGPT, ממה הוא בנוי ומהם שלבי הפיתוח שלו. שני מסלולים: התנסות ראשונה, וריענון שבו בודקים סידור קיים ומתקנים.">
+  <meta name="author" content="דן כהן, רומי מילר">
+  <meta name="theme-color" content="#191834">
+  <meta property="og:title" content="צוללים לתוך פלאגין">
+  <meta property="og:description" content="יחידת לימוד על מבנה הפלאגין ושלבי הפיתוח שלו, בשני מסלולים: התנסות ראשונה (כ־10 דקות) וריענון לאחר התנסות (כ־6 דקות).">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.rtl.min.css">
+  <link rel="stylesheet" href="css/main.css?v=20261122j">
+  <script src="js/core/a11y.js?v=20261122i"></script>
+  <script defer src="assets/vendor/bootstrap/bootstrap.min.js"></script>
+  <script defer src="js/vendor/scorm-api-wrapper.js"></script>
+  <script defer src="js/core/lms.js?v=20261122i"></script>
+  <script defer src="js/data/content.js?v=20261122i"></script>
+  <script defer src="js/core/scoring.js?v=20261122i"></script>
+  <script defer src="js/core/state.js?v=20261122i"></script>
+  <script defer src="js/motion/engine.js?v=20261122i"></script>
+  <script defer src="js/motion/ambient.js?v=20261113b"></script>
+  <script defer src="js/ui/glossary.js?v=20261122i"></script>
+  <script defer src="js/ui/tooltip.js?v=20261122i"></script>
+  <script defer src="js/ui/textsize.js?v=20261122i"></script>
+  <script defer src="js/games/scratch.js?v=20261113b"></script>
+  <script defer src="js/games/explore.js?v=20261122i"></script>
+  <script defer src="js/games/quickchecks.js?v=20261122i"></script>
+  <script defer src="js/games/wreck.js?v=20261122i"></script>
+  <script defer src="js/games/stations.js?v=20261122i"></script>
+  <script defer src="js/form/logbook.js?v=20261122i"></script>
+  <script defer src="js/form/report.js?v=20261122i"></script>
+  <script defer src="js/core/track.js?v=20261122i"></script>
+  <script defer src="js/app.js?v=20261122i"></script>
+</head>
+<body>
+  <!-- Skip link and the live region that announces feedback to screen readers. -->
+  <a class="visually-hidden-focusable skip-link" href="#main-content">דילוג לתוכן הראשי</a>
+  <div id="announcer" class="visually-hidden" aria-live="polite"></div>
+
+  <!-- Icon sprite: every icon on the page is a <use> of one of these symbols. -->
+  <svg class="d-none" aria-hidden="true">
+<symbol xmlns="http://www.w3.org/2000/svg" class="bi bi-folder2" viewBox="0 0 16 16" id="folder2"><path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5z"/></symbol>
+<symbol xmlns="http://www.w3.org/2000/svg" class="bi bi-folder2-open" viewBox="0 0 16 16" id="folder2-open"><path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7z"/></symbol>
+<symbol xmlns="http://www.w3.org/2000/svg" class="bi bi-file-earmark-text" viewBox="0 0 16 16" id="file-earmark-text"><path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/><path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/></symbol>
+<symbol xmlns="http://www.w3.org/2000/svg" class="bi bi-file-earmark-code" viewBox="0 0 16 16" id="file-earmark-code"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/><path d="M8.646 6.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 9 8.646 7.354a.5.5 0 0 1 0-.708m-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 9l1.647-1.646a.5.5 0 0 0 0-.708"/></symbol>
+<symbol xmlns="http://www.w3.org/2000/svg" class="bi bi-play-circle" viewBox="0 0 16 16" id="play-circle"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/></symbol>
+<symbol xmlns="http://www.w3.org/2000/svg" class="bi bi-pause-circle" viewBox="0 0 16 16" id="pause-circle"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0z"/></symbol>
+<symbol xmlns="http://www.w3.org/2000/svg" class="bi bi-chevron-down" viewBox="0 0 16 16" id="chevron-down"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></symbol>
+<symbol xmlns="http://www.w3.org/2000/svg" class="bi bi-check-circle" viewBox="0 0 16 16" id="check-circle"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/></symbol>
+<symbol viewBox="0 0 16 16" id="x-circle"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/></symbol>
+<symbol viewBox="0 0 16 16" id="dash-circle"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/></symbol>
+    <!-- Simple line icons drawn for this unit (stroke based). -->
+    <symbol viewBox="0 0 16 16" id="i-clock"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.2V8l2.6 1.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol viewBox="0 0 16 16" id="i-search"><circle cx="6.8" cy="6.8" r="4.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.3 10.3 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol viewBox="0 0 16 16" id="i-chat"><path d="M2.5 3h11a1 1 0 0 1 1 1v6.5a1 1 0 0 1-1 1H7l-3.2 2.6v-2.6H2.5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol viewBox="0 0 16 16" id="i-flip"><path d="M2.5 6.5a5.5 5.5 0 0 1 10-2.3M13.5 9.5a5.5 5.5 0 0 1-10 2.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12.8 1.6v2.9H9.9M3.2 14.4v-2.9h2.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <!-- Bootstrap Icons 1.11 (MIT), outline versions. -->
+    <symbol viewBox="0 0 16 16" id="info-circle"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/></symbol>
+    <symbol viewBox="0 0 16 16" id="book"><path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/></symbol>
+    <symbol viewBox="0 0 16 16" id="exclamation-triangle"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"/><path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/></symbol>
+    <symbol viewBox="0 0 16 16" id="i-pause"><path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5"/></symbol>
+    <symbol viewBox="0 0 16 16" id="i-play"><path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/></symbol>
+    <symbol viewBox="0 0 16 16" id="arrow-repeat"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/></symbol>
+    <symbol viewBox="0 0 16 16" id="i-captions"><rect x="1.5" y="3" width="13" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M4.2 7h4.6M4.2 9.6h2.4M8.6 9.6h3.2M10.5 7h1.3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  </svg>
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true">
+    <clipPath id="sky-clip" clipPathUnits="objectBoundingBox">
+      <path d="M0 0H1V0.88C0.83 0.96 0.67 0.96 0.5 0.89C0.33 0.82 0.17 0.82 0 0.89Z"/>
+    </clipPath>
+  </svg>
+  <svg class="d-none" aria-hidden="true">
+    <symbol id="logo-mark" viewBox="0 0 32 32">
+      <path class="logo-mark__top" d="M6 10a2 2 0 0 1 2-2h6l3 3h7a2 2 0 0 1 2 2v3H6z"/>
+      <path class="logo-mark__wave" d="M6 17c3-2 5-2 7 0s5 2 7 0 4-2 6 0v6a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/>
+    </symbol>
+    <symbol id="folder-shape" viewBox="0 0 1600 900">
+      <path d="M610 318a16 16 0 0 1 16-16h110l34 40h204a16 16 0 0 1 16 16v224a16 16 0 0 1-16 16H626a16 16 0 0 1-16-16Z"/>
+    </symbol>
+    <symbol id="wave-shape" viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0 74C240 24 480 24 720 74S1200 124 1440 74V120H0Z"/>
+    </symbol>
+    <symbol id="pointer" viewBox="0 0 16 16">
+      <path d="M3 1.2 13 7.4 8.9 8.6 11.2 13.7 9.3 14.6 7 9.5 3.9 12.3Z"/>
+    </symbol>
+    <!-- A small diver, drawn head down. -->
+    <symbol id="diver" viewBox="0 0 40 64">
+      <path class="diver__fin" d="M10 2c3 0 6 3 7 9h-6C9 8 8 4 10 2Zm20 0c-3 0-6 3-7 9h6c2-3 3-7 1-9Z"/>
+      <rect class="diver__suit" x="14" y="9" width="5" height="16" rx="2.5"/>
+      <rect class="diver__suit" x="21" y="9" width="5" height="16" rx="2.5"/>
+      <rect class="diver__tank" x="26" y="22" width="7" height="18" rx="3.5"/>
+      <rect class="diver__suit" x="12" y="22" width="16" height="22" rx="7"/>
+      <path class="diver__suit" d="M12 30 5 40l3 2 6-7Zm16 0 7 10-3 2-6-7Z"/>
+      <circle class="diver__skin" cx="20" cy="50" r="8"/>
+      <rect class="diver__mask" x="13.5" y="49" width="13" height="7" rx="3"/>
+    </symbol>
+  </svg>
+
+  <!-- Fixed depth world behind the page; decorative only. -->
+  <div class="world" aria-hidden="true">
+    <div class="world__water"></div>
+    <div class="world__rays"></div>
+    <div class="world__far">
+      <svg class="drift drift--1"><use href="#folder-shape"></use></svg>
+      <svg class="drift drift--2"><use href="#folder-shape"></use></svg>
+      <svg class="drift drift--3"><use href="#folder-shape"></use></svg>
+      <svg class="drift drift--4"><use href="#folder-shape"></use></svg>
+    </div>
+    <canvas id="ambient" class="world__canvas"></canvas>
+    <div class="world__near">
+      <span class="blob blob--1"></span><span class="blob blob--2"></span><span class="blob blob--3"></span>
+    </div>
+  </div>
+
+  <div class="depth-hud d-none d-xl-flex" aria-hidden="true">
+    <div class="depth-hud__rail">
+      <span class="depth-hud__diver">
+        <svg class="depth-hud__figure"><use href="#diver"></use></svg>
+        <span class="depth-hud__bubble depth-hud__bubble--1"></span>
+        <span class="depth-hud__bubble depth-hud__bubble--2"></span>
+      </span>
+    </div>
+    <div class="depth-hud__readout">
+      <span><span id="hud-depth">0</span> מ׳</span>
+      <span id="hud-path" class="depth-hud__path">quiz-plugin/</span>
+    </div>
+  </div>
+
+  <!-- Header: top bar (logo, main menu, text size, glossary, motion pause) and the opening with the track choice. -->
+  <header>
+    <nav class="navbar navbar-expand-xxl fixed-top site-nav" data-bs-theme="dark" aria-label="ניווט ראשי ביחידת הלמידה">
+      <div class="container-xxl site-nav__bar">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#surface">
+          <svg class="logo-mark" aria-hidden="true"><use href="#logo-mark"></use></svg>
+          <span class="site-nav__name">צוללים לתוך פלאגין</span>
+        </a>
+        <!-- Always visible, also on phones: text size, the glossary and the motion pause. -->
+        <div class="nav-tools">
+          <span class="nav-tools__wide">
+            <button type="button" class="btn btn-outline-light track-chip js-track-change" id="track-chip" hidden>
+              <svg class="bi" aria-hidden="true"><use href="#arrow-repeat"></use></svg><span>שינוי מסלול</span>
+            </button>
+          </span>
+          <div class="text-size" role="group" aria-label="גודל הטקסט">
+            <button type="button" class="text-size__btn text-size__btn--normal" data-size="normal" aria-label="טקסט בגודל רגיל" data-tip="טקסט בגודל רגיל" aria-pressed="true"><span aria-hidden="true">א</span></button>
+            <button type="button" class="text-size__btn text-size__btn--medium" data-size="medium" aria-label="טקסט בגודל בינוני" data-tip="טקסט בגודל בינוני" aria-pressed="false"><span aria-hidden="true">א</span></button>
+            <button type="button" class="text-size__btn text-size__btn--large" data-size="large" aria-label="טקסט בגודל גדול" data-tip="טקסט בגודל גדול" aria-pressed="false"><span aria-hidden="true">א</span></button>
+          </div>
+          <button type="button" class="btn btn-outline-light nav-icon" aria-label="מילון מושגים" data-tip="מילון מושגים" data-bs-toggle="offcanvas" data-bs-target="#glossary" aria-controls="glossary">
+            <svg class="bi" aria-hidden="true"><use href="#book"></use></svg>
+          </button>
+          <span class="nav-tools__wide">
+            <button id="motion-toggle" class="btn btn-outline-light nav-icon js-motion-toggle" type="button" aria-pressed="false" aria-label="עצירת תנועה" data-tip="עצירת תנועה">
+              <svg class="bi" aria-hidden="true"><use class="js-motion-icon" href="#i-pause"></use></svg>
+            </button>
+          </span>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="פתיחה וסגירה של התפריט">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main-menu">
+          <ul class="navbar-nav site-nav__links">
+            <li class="nav-item" data-track-only="none first"><a class="nav-link" href="#what-is-plugin" data-nav="what-is-plugin">מה זה פלאגין</a></li>
+            <li class="nav-item" data-track-only="refresh"><a class="nav-link" href="#example" data-nav="example">הדוגמה</a></li>
+            <li class="nav-item" data-track-only="none first"><a class="nav-link" href="#dive" data-nav="dive">מבנה התיקיות</a></li>
+            <li class="nav-item"><a class="nav-link" href="#wreck" data-nav="wreck"><span data-track-only="none first">סידור הקבצים</span><span data-track-only="refresh">בדיקת הסידור</span></a></li>
+            <li class="nav-item" data-track-only="none first"><a class="nav-link" href="#ascent" data-nav="ascent">שלבי הפיתוח</a></li>
+            <li class="nav-item" data-track-only="refresh"><a class="nav-link" href="#checks" data-nav="checks">נתיבים ותוצר</a></li>
+            <li class="nav-item"><a class="nav-link" href="#logbook" data-nav="logbook">בדיקת הבנה</a></li>
+          </ul>
+          <!-- On narrow screens these two live in the menu, with their names written out. -->
+          <div class="site-nav__menu-tools">
+            <button type="button" class="btn btn-outline-light js-track-change" id="track-chip-menu" hidden>
+              <svg class="bi" aria-hidden="true"><use href="#arrow-repeat"></use></svg><span>שינוי מסלול</span>
+            </button>
+            <button type="button" class="btn btn-outline-light js-motion-toggle" id="motion-toggle-menu" aria-pressed="false">
+              <svg class="bi" aria-hidden="true"><use class="js-motion-icon" href="#i-pause"></use></svg><span class="js-motion-label">עצירת תנועה</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="site-nav__progress" aria-hidden="true"></div>
+    </nav>
+
+    <!-- Opening: greeting from the LMS, title, and the two learning-track cards. Nothing below opens before a choice. -->
+    <section id="surface" class="surface" data-scene data-depth="0" data-path="quiz-plugin/">
+      <div class="surface__sky" aria-hidden="true"></div>
+      <svg class="surface__crest" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 0.89 C0.17 0.82 0.33 0.82 0.5 0.89 C0.67 0.96 0.83 0.96 1 0.88"/>
+      </svg>
+      <div class="container-xxl surface__content">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7">
+            <p id="lms-notice" class="lms-notice" role="status" hidden></p>
+            <p id="learner-greeting" class="learner-greeting">שלום לכם, צוללים! ברוכים הבאים לצלילה.</p>
+            <h1>צוללים לתוך פלאגין</h1>
+            <p class="lead-text">נצלול יחד אל תוך עולם ה<span data-term="plugin">פלאגין</span>: ממה הוא בנוי, איך מפתחים אותו, ואיך בודקים שהוא עובד.</p>
+          </div>
+          <div class="col-lg-5 d-none d-lg-block">
+            <svg class="hero-art" viewBox="0 0 520 440" role="img" aria-label="תיקיית פלאגין עם שלושה קבצים, שמתחברת לחלון של צ׳אט">
+              <defs>
+                <linearGradient id="art-folder" x1="0" y1="0" x2="0" y2="1">
+                  <stop class="art-stop-a" offset="0"/>
+                  <stop class="art-stop-b" offset="1"/>
+                </linearGradient>
+              </defs>
+              <rect class="art-ink" x="306" y="8" width="208" height="176" rx="20"/>
+              <circle class="art-mint" cx="330" cy="32" r="6"/>
+              <circle class="art-cyan" cx="350" cy="32" r="6"/>
+              <text class="art-title" x="496" y="40" text-anchor="start" direction="rtl">צ׳אט</text>
+              <rect class="art-indigo" x="326" y="58" width="120" height="30" rx="13"/>
+              <rect class="art-mint" x="374" y="98" width="120" height="30" rx="13"/>
+              <rect class="art-indigo" x="326" y="138" width="96" height="30" rx="13"/>
+              <path class="art-cable" d="M336 352C430 352 448 280 420 190"/>
+              <circle class="art-plug" cx="420" cy="190" r="11"/>
+              <path class="art-back" d="M6 236a16 16 0 0 1 16-16h96l24 26h178a16 16 0 0 1 16 16v152a16 16 0 0 1-16 16H22a16 16 0 0 1-16-16Z"/>
+              <rect class="art-card" x="34" y="104" width="270" height="90" rx="10"/>
+              <text class="art-file" x="52" y="136" text-anchor="start" direction="ltr">plugin.json</text>
+              <rect class="art-card" x="34" y="150" width="270" height="90" rx="10"/>
+              <text class="art-file" x="52" y="182" text-anchor="start" direction="ltr">README.md</text>
+              <rect class="art-card art-card--main" x="34" y="196" width="270" height="110" rx="10"/>
+              <text class="art-file art-file--main" x="52" y="230" text-anchor="start" direction="ltr">SKILL.md</text>
+              <rect class="art-front" x="6" y="282" width="330" height="150" rx="16"/>
+              <text class="art-name" x="171" y="368" text-anchor="middle" direction="ltr">quiz-plugin/</text>
+            </svg>
+          </div>
+          <div class="col-12">
+            <div class="track-picker" id="track-picker" role="group" aria-labelledby="track-picker-title" tabindex="-1">
+              <h2 class="track-picker__legend" id="track-picker-title">רגע לפני שקופצים למים: איך תרצו לצלול?</h2>
+              <div class="track-picker__options">
+                <button type="button" class="track-card track-card--first" data-track="first" aria-pressed="false" aria-describedby="track-first-desc">
+                  <span class="track-card__top">
+                    <span class="track-card__icon" aria-hidden="true"><svg class="bi"><use href="#folder2-open"></use></svg></span>
+                    <span class="track-card__meta"><svg class="bi" aria-hidden="true"><use href="#i-clock"></use></svg>כ־10 דקות</span>
+                  </span>
+                  <span class="track-card__kicker">עוד לא בניתי פלאגין</span>
+                  <strong class="track-card__title">התנסות ראשונה</strong>
+                  <span class="track-card__desc" id="track-first-desc">נכיר כל קובץ ואת התפקיד שלו, ונסדר את הפלאגין יחד, שכבה אחרי שכבה.</span>
+                  <span class="track-card__cta" aria-hidden="true">צוללים פנימה<svg class="bi"><use href="#chevron-down"></use></svg></span>
+                </button>
+                <button type="button" class="track-card track-card--refresh" data-track="refresh" aria-pressed="false" aria-describedby="track-refresh-desc">
+                  <span class="track-card__top">
+                    <span class="track-card__icon" aria-hidden="true"><svg class="bi"><use href="#i-search"></use></svg></span>
+                    <span class="track-card__meta"><svg class="bi" aria-hidden="true"><use href="#i-clock"></use></svg>כ־6 דקות</span>
+                  </span>
+                  <span class="track-card__kicker">כבר בניתי דוגמה פשוטה</span>
+                  <strong class="track-card__title">ריענון לאחר התנסות</strong>
+                  <span class="track-card__desc" id="track-refresh-desc">נבדוק פלאגין שמישהו כבר בנה, נמצא מה התקלקל ונתקן.</span>
+                  <span class="track-card__cta" aria-hidden="true">יוצאים לבדיקה<svg class="bi"><use href="#chevron-down"></use></svg></span>
+                </button>
+              </div>
+              <p class="track-picker__note" id="track-picker-note">אפשר להחליף מסלול בכל שלב עד ההגשה.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <!-- Main content. Parts marked data-track-only appear only in that track ("first" or "refresh"). -->
+  <main id="main-content">
+    <div class="descent" data-scene data-pinned data-depth="4" data-path="quiz-plugin/" aria-hidden="true">
+      <div class="descent__stage">
+        <svg class="deep-folder deep-folder--1"><use href="#folder-shape"></use></svg>
+        <svg class="deep-folder deep-folder--2"><use href="#folder-shape"></use></svg>
+        <svg class="deep-folder deep-folder--3"><use href="#folder-shape"></use></svg>
+        <p class="descent__breath">קחו נשימה, אנחנו צוללים</p>
+      </div>
+    </div>
+
+    <!-- First track: what a plugin is, with the explainer video and its transcript. -->
+    <section id="what-is-plugin" class="scene" data-scene data-depth="7" data-path="quiz-plugin/" data-nav-section="what-is-plugin" data-track-only="first">
+      <div class="container-xxl">
+        <h2 class="mb-4">מה זה פלאגין, ולמה הוא שימושי?</h2>
+
+        <div class="panel">
+          <p class="definition"><strong>בקצרה: <span data-term="plugin">פלאגין</span> הוא ״ערכת עבודה״ שמוסיפים ל־ChatGPT, כדי שיעשה משימה אחת שוב ושוב, בדיוק באותה צורה.</strong> את דרך העבודה כותבים פעם אחת, וחוסכים את ההסבר מחדש בכל שיחה.</p>
+          <p>בתוך הערכה יש <span data-term="skill"><span lang="en" dir="ltr">Skills</span></span> ו<span data-term="assets">חומרי עזר</span>, וכל אחד מהם שמור בקובץ משלו. הסרטון מראה איך החלקים מתחברים לצ׳אט.</p>
+          <p class="watch-cue"><svg class="bi" aria-hidden="true"><use href="#play-circle"></use></svg>צפו בסרטון הקצר (כחצי דקה):</p>
+          <div class="video-wrap">
+            <div class="ratio ratio-16x9 video-frame">
+              <video id="explainer" controls playsinline preload="metadata" poster="assets/media/plugin-explainer-poster.jpg" aria-label="סרטון הסבר: מה זה פלאגין ב־ChatGPT ומה התפקיד שלו">
+                <source src="assets/media/plugin-explainer.he.mp4?v=20261122" type="video/mp4">
+                <track kind="captions" src="assets/media/plugin-explainer.he.vtt?v=20261122" srclang="he" label="עברית" default>
+                הדפדפן שלכם לא מציג וידאו. התוכן המלא מופיע בתמליל.
+              </video>
+            </div>
+            <button class="transcript-btn" id="transcript-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#clip-transcript" aria-expanded="false" aria-controls="clip-transcript">
+              <svg class="bi" aria-hidden="true"><use href="#i-captions"></use></svg>
+              <span>לקריאת תמליל הסרטון</span>
+              <svg class="bi transcript-btn__chevron" aria-hidden="true"><use href="#chevron-down"></use></svg>
+            </button>
+            <div id="clip-transcript" class="collapse">
+              <div class="transcript">
+                <p>ChatGPT יודע לענות כמעט על הכול, אבל בכל שיחה חדשה מסבירים מחדש מה רוצים. פלאגין הוא תוסף שמלמד את ChatGPT לבצע משימה מסוימת, באותה דרך בכל פעם. הוא מוסיף לצ׳אט מיומנויות, חומרי עזר, ולפעמים גם חיבור לכלים אחרים. כל זה כתוב בכמה קבצים, ולכל קובץ יש תפקיד חשוב. ביחידה הזו נצלול יחד לתוך הקבצים האלה.</p>
+                <p class="transcript__visual"><strong>מה רואים בסרטון:</strong> שתי שיחות חדשות עם הצ׳אט, ובכל אחת מסבירים לו מחדש איך לעבוד. אחר כך תיקייה בשם ״פלאגין״ מתחברת בכבל לחלון השיחה. מהתיקייה עולים שני חלקים: מיומנויות וחומרי עזר. אחר כך מופיעים מעליה שלושה קבצים: <span dir="ltr" lang="en">plugin.json</span>, <span dir="ltr" lang="en">README.md</span> ו־<span dir="ltr" lang="en">SKILL.md</span>. בסוף מופיעה הכותרת ״צוללים לתוך הקבצים״.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The example that runs through the unit (both tracks); the refresh track adds the colleague's story and the names. -->
+    <section id="example" class="scene scene--tight" data-scene data-depth="10" data-path="quiz-plugin/" data-nav-section="what-is-plugin example" aria-labelledby="example-title">
+      <div class="container-xxl">
+        <div class="panel example">
+          <p class="eyebrow" data-track-only="first">מכאן ועד סוף היחידה</p>
+          <p class="eyebrow" data-track-only="refresh">לפני שמתחילים לבדוק</p>
+          <h2 id="example-title"><span data-track-only="first">הדוגמה שתלווה אותנו</span><span data-track-only="refresh">הכירו את הפלאגין שנבדוק</span></h2>
+          <p class="example__lead">איש למידה מדביק קטע הדרכה, ומקבל שלוש שאלות תרגול עם משוב. השאלות מבוססות רק על הקטע.</p>
+          <ol class="flow" id="example-flow">
+            <li class="flow__step flow__step--in">
+              <span class="flow__icon"><svg class="bi" aria-hidden="true"><use href="#file-earmark-text"></use></svg></span>
+              <strong>נותנים</strong>
+              <span>קטע הדרכה על פישינג</span>
+            </li>
+            <li class="flow__step flow__step--plugin">
+              <span class="flow__icon flow__icon--folder"><svg class="bi" aria-hidden="true"><use href="#folder2"></use></svg></span>
+              <strong>הפלאגין עובד</strong>
+              <code class="fname" dir="ltr" lang="en">quiz-plugin</code>
+            </li>
+            <li class="flow__step flow__step--out">
+              <span class="flow__icon flow__icon--qs" aria-hidden="true"><b>?</b><b>?</b><b>?</b></span>
+              <strong>מקבלים</strong>
+              <span>3 שאלות עם משוב</span>
+            </li>
+          </ol>
+          <button type="button" class="btn btn-action" id="example-play"><svg class="bi" aria-hidden="true"><use href="#play-circle"></use></svg>הפעלת הדוגמה</button>
+          <dl class="example__facts">
+            <div><dt>למי?</dt><dd>איש למידה</dd></div>
+            <div><dt>מה נותנים?</dt><dd>קטע הדרכה</dd></div>
+            <div><dt>מה מקבלים?</dt><dd>שלוש שאלות עם משוב</dd></div>
+            <div><dt>על מה מסתמכים?</dt><dd>רק על הקטע</dd></div>
+          </dl>
+          <p class="example__note"><strong>פישינג</strong> הוא הודעה מתחזה שמנסה לגרום לנו למסור פרטים אישיים, כמו סיסמה.</p>
+          <div class="mission" data-track-only="refresh">
+            <h3 class="mission__title">עמית מהצוות בנה את <code class="fname" dir="ltr" lang="en">quiz-plugin</code>, אבל הוא לא עובד כמו שצריך</h3>
+            <p>נבדוק אותו בשלושה שלבים, באותו סדר שבו בודקים כל <span data-term="plugin">פלאגין</span> קיים:</p>
+            <ol class="mission__steps">
+              <li><span class="mission__n" aria-hidden="true">1</span><span><strong>בדיקת הסידור:</strong> כל קובץ בתיקייה שלו?</span></li>
+              <li><span class="mission__n" aria-hidden="true">2</span><span><strong>בדיקת הנתיבים וההפעלה:</strong> ההוראות מוצאות את הקבצים? המיומנות מתעוררת בזמן?</span></li>
+              <li><span class="mission__n" aria-hidden="true">3</span><span><strong>בדיקת התוצר:</strong> השאלות שיצאו באמת תקינות?</span></li>
+            </ol>
+            <h4 class="mission__sub">לפני שמתחילים: שני הסברים קצרים</h4>
+            <details class="file-legend-box">
+              <summary><svg class="bi" aria-hidden="true"><use href="#chevron-down"></use></svg><span>מה אומרים השמות של הפלאגין והתיקיות בדוגמה?</span></summary>
+              <p class="names-story">הפלאגין נקרא <code class="fname" dir="ltr" lang="en">quiz-plugin</code>, וזה גם שם התיקייה הראשית שלו (<em>quiz</em> הוא ״חידון״ באנגלית). בתוכה יש תיקייה בשם <code class="fname" dir="ltr" lang="en">skills/</code> לכל ה<span data-term="skill">מיומנויות</span> של הפלאגין. בדוגמה יש מיומנות אחת בלבד, והיא נקראת <code class="fname" dir="ltr" lang="en">quiz-maker</code> (״יוצר החידונים״): זו המיומנות שמכינה את שלוש השאלות. למיומנות יש תיקייה משלה, ובתוכה שתי תיקיות משנה: <code class="fname" dir="ltr" lang="en">assets/</code> ל<span data-term="assets">חומרי עזר</span>, ו־<code class="fname" dir="ltr" lang="en">references/</code> לדוגמאות.</p>
+            </details>
+            <details class="file-legend-box">
+              <summary><svg class="bi" aria-hidden="true"><use href="#chevron-down"></use></svg><span>מה התפקיד של כל קובץ בפלאגין?</span></summary>
+              <dl class="file-legend">
+                <div><dt><code dir="ltr" lang="en">plugin.json</code></dt><dd>קובץ הזיהוי של הפלאגין, בשביל המערכת.</dd></div>
+                <div><dt><code dir="ltr" lang="en">README.md</code></dt><dd>הסבר על הפלאגין, בשביל אנשים.</dd></div>
+                <div><dt><code dir="ltr" lang="en">SKILL.md</code></dt><dd><span data-term="instructions">קובץ ההוראות</span>. בסופו שורות שמפנות לתבנית ולדוגמאות.</dd></div>
+                <div><dt><code dir="ltr" lang="en">question-template.md</code></dt><dd>התבנית: השלד שלפיו נכתבת כל שאלה.</dd></div>
+                <div><dt><code dir="ltr" lang="en">sample-input.txt</code>, <code dir="ltr" lang="en">sample-output.md</code></dt><dd>דוגמת קלט ודוגמת פלט, כדי ש־ChatGPT יראה איך נראה תוצר תקין.</dd></div>
+              </dl>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- First track: the dive through the plugin folders, one stop per depth, each with its own interaction. -->
+    <section id="dive" class="dive" data-nav-section="dive" data-track-only="first">
+      <div class="container-xxl">
+        <h2>מה יש בתוך הפלאגין?</h2>
+        <div class="panel content-col dive__intro">
+          <p>כל <span data-term="plugin">פלאגין</span> הוא <strong>תיקייה</strong>, ובתוכה תיקיות וקבצים. לכל תיקייה ולכל קובץ יש תפקיד.</p>
+          <p>כדי לראות אותם, נפתח את התיקייה של <code class="fname" dir="ltr" lang="en">quiz-plugin</code>, הפלאגין מהדוגמה, ונצלול בה שכבה אחרי שכבה. בכל עומק נעצור, נבין מה התיקייה ולמה צריך אותה, ונכיר את הקבצים שבה.</p>
+          <p class="route__title">המסלול שלנו, תיקייה בתוך תיקייה:</p>
+          <ol class="route" aria-label="המסלול שלנו בתוך התיקיות">
+            <li class="route__item" style="--lvl: 0"><svg class="bi" aria-hidden="true"><use href="#folder2-open"></use></svg><code dir="ltr" lang="en">quiz-plugin/</code><span>התיקייה הראשית</span></li>
+            <li class="route__item" style="--lvl: 1"><svg class="bi" aria-hidden="true"><use href="#folder2-open"></use></svg><code dir="ltr" lang="en">skills/</code><span>המיומנויות</span></li>
+            <li class="route__item" style="--lvl: 2"><svg class="bi" aria-hidden="true"><use href="#folder2-open"></use></svg><code dir="ltr" lang="en">quiz-maker/</code><span>המיומנות שלנו</span></li>
+            <li class="route__item" style="--lvl: 3"><svg class="bi" aria-hidden="true"><use href="#folder2-open"></use></svg><code dir="ltr" lang="en">assets/</code><span>חומרי עזר</span></li>
+            <li class="route__item" style="--lvl: 3"><svg class="bi" aria-hidden="true"><use href="#folder2-open"></use></svg><code dir="ltr" lang="en">references/</code><span>דוגמאות</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="stop" data-depth="20" data-path="quiz-plugin/">
+        <div class="container-xxl">
+          <article class="panel stop__panel content-col">
+            <p class="stop__depth">עומק 20 מ׳ · התיקייה הראשית</p>
+            <h3><span class="kind">תיקייה</span> <code class="fname" dir="ltr" lang="en">quiz-plugin/</code></h3>
+            <dl class="why">
+              <div><dt>מה זו?</dt><dd>התיקייה הראשית של הפלאגין. כל מה שהפלאגין צריך נמצא בתוכה.</dd></div>
+              <div><dt>למה צריך אותה?</dt><dd>דרכה ChatGPT מזהה את הפלאגין, ודרכה אנשים מבינים מה הוא עושה. לכן יש בה שני קבצים: אחד למערכת ואחד לאנשים.</dd></div>
+            </dl>
+            <p class="task"><svg class="bi" aria-hidden="true"><use href="#i-search"></use></svg><span><strong>מה עושים כאן?</strong> העבירו את זכוכית המגדלת על כל קובץ כדי לראות מה כתוב בתוכו. אפשר גם ללחוץ על ״פתיחת הקובץ״.</span></p>
+            <div class="xray-grid">
+              <figure class="xray" data-xray>
+                <figcaption class="xray__head"><span class="kind kind--file">קובץ</span><code class="fname" dir="ltr" lang="en">plugin.json</code><span class="xray__who">למערכת</span></figcaption>
+                <div class="xray__window">
+                  <div class="xray__inside">
+                    <p class="xray__intro">קובץ הזיהוי של הפלאגין. הוא בנוי משדות: לכל שדה יש שם, ואחריו הערך שלו.</p>
+                    <ul class="fields">
+                      <li><code dir="ltr" lang="en"><b>name</b>: "quiz-plugin"</code><span>שדה <b dir="ltr">name</b>: השם של הפלאגין.</span></li>
+                      <li><code dir="ltr" lang="en"><b>version</b>: "1.0.0"</code><span>שדה <b dir="ltr">version</b>: מספר הגרסה.</span></li>
+                      <li><code dir="ltr" lang="en"><b>description</b>: "…three practice questions…"</code><span>שדה <b dir="ltr">description</b>: תיאור קצר של מה הפלאגין עושה.</span></li>
+                    </ul>
+                  </div>
+                  <div class="xray__cover" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+                  <span class="xray__lens" aria-hidden="true"></span>
+                </div>
+                <button type="button" class="btn btn-action btn-action--small xray__open">פתיחת הקובץ</button>
+              </figure>
+              <figure class="xray" data-xray>
+                <figcaption class="xray__head"><span class="kind kind--file">קובץ</span><code class="fname" dir="ltr" lang="en">README.md</code><span class="xray__who">לאנשים</span></figcaption>
+                <div class="xray__window">
+                  <div class="xray__inside">
+                    <p class="xray__intro">קובץ טקסט רגיל, שנכתב בשביל אנשים ולא בשביל המערכת.</p>
+                    <ul class="fields">
+                      <li><span>מה הפלאגין עושה: יוצר שלוש שאלות תרגול מתוך קטע הדרכה.</span></li>
+                      <li><span>למי הוא מיועד: לאנשי למידה.</span></li>
+                      <li><span>איך משתמשים בו: מדביקים קטע ומבקשים שאלות.</span></li>
+                    </ul>
+                  </div>
+                  <div class="xray__cover" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+                  <span class="xray__lens" aria-hidden="true"></span>
+                </div>
+                <button type="button" class="btn btn-action btn-action--small xray__open">פתיחת הקובץ</button>
+              </figure>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="portal" data-scene data-pinned data-depth="30" data-path="quiz-plugin/skills/" aria-hidden="true">
+        <div class="portal__stage">
+          <svg class="portal__ring"><use href="#folder-shape"></use></svg>
+          <svg class="portal__ring portal__ring--2"><use href="#folder-shape"></use></svg>
+          <svg class="portal__ring portal__ring--3"><use href="#folder-shape"></use></svg>
+          <span class="portal__next" dir="ltr">skills/</span>
+        </div>
+      </div>
+
+      <div class="stop" data-depth="40" data-path="quiz-plugin/skills/">
+        <div class="container-xxl">
+          <article class="panel stop__panel content-col">
+            <p class="stop__depth">עומק 40 מ׳ · תיקיית המיומנויות</p>
+            <h3><span class="kind">תיקייה</span> <code class="fname" dir="ltr" lang="en">skills/</code></h3>
+            <dl class="why">
+              <div><dt>מה זו?</dt><dd>התיקייה שבה נשמרות המיומנויות (<span data-term="skill"><span lang="en" dir="ltr">Skills</span></span>) של הפלאגין. <strong>מיומנות</strong> היא מתכון עבודה כתוב: מתי לפעול, מה לעשות ואיך ייראה התוצר.</dd></div>
+              <div><dt>למה צריך אותה?</dt><dd>לפלאגין יכולות להיות כמה מיומנויות, וכל אחת מקבלת כאן תיקייה משלה. בדוגמה שלנו יש מיומנות אחת: <code class="fname" dir="ltr" lang="en">quiz-maker</code>.</dd></div>
+            </dl>
+            <h4 class="sub-title">מתי המיומנות מתעוררת?</h4>
+            <p>לכל מיומנות יש <strong>שדה</strong> בשם <code class="fname" dir="ltr" lang="en">description</code>: שורה אחת שמתארת מה המיומנות עושה. ChatGPT קורא את השורה הזו, ולפיה מחליט אם להפעיל את המיומנות. במיומנות שלנו כתוב בשדה:</p>
+            <p class="desc-line"><code dir="ltr" lang="en">description: Create three practice questions from a supplied training passage.</code><span>(״צור שלוש שאלות תרגול מתוך קטע ההדרכה הנתון״)</span></p>
+            <p class="task"><svg class="bi" aria-hidden="true"><use href="#i-chat"></use></svg><span><strong>מה עושים כאן?</strong> שלחו לצ׳אט אחת משלוש ההודעות, ובדקו אם המיומנות מתעוררת.</span></p>
+            <div class="chat" id="chat-sim">
+              <div class="chat__window" id="chat-log" aria-live="polite">
+                <p class="chat__empty">כאן תופיע השיחה.</p>
+              </div>
+              <div class="chat__skill" id="chat-skill" aria-hidden="true">
+                <span class="chat__skill-dot"></span><code dir="ltr" lang="en">quiz-maker</code>
+              </div>
+              <div class="chat__chips" role="group" aria-label="הודעות לשליחה">
+                <button type="button" class="chat-chip" data-msg="0">הנה קטע על פישינג. תכין ממנו 3 שאלות תרגול.</button>
+                <button type="button" class="chat-chip" data-msg="1">תסכם לי את הפגישה של אתמול.</button>
+                <button type="button" class="chat-chip" data-msg="2">תכתוב לי חידון על בירות העולם.</button>
+              </div>
+            </div>
+            <p class="small-note"><strong>שימו לב:</strong> זו המחשה פשוטה. ChatGPT לא מחפש בהודעה את אותן מילים שכתובות בשדה <code dir="ltr" lang="en">description</code>, אלא מבין מה ביקשו ממנו. למשל, גם ההודעה ״תעשה לי תרגול מהטקסט הזה״ תעיר את המיומנות, אף שאין בה את המילה ״שאלות״.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="portal" data-scene data-pinned data-depth="50" data-path="quiz-plugin/skills/quiz-maker/" aria-hidden="true">
+        <div class="portal__stage">
+          <svg class="portal__ring"><use href="#folder-shape"></use></svg>
+          <svg class="portal__ring portal__ring--2"><use href="#folder-shape"></use></svg>
+          <svg class="portal__ring portal__ring--3"><use href="#folder-shape"></use></svg>
+          <span class="portal__next" dir="ltr">quiz-maker/</span>
+        </div>
+      </div>
+
+      <div class="stop stop--branches" data-depth="60" data-path="quiz-plugin/skills/quiz-maker/">
+        <div class="container-xxl">
+          <article class="panel stop__panel content-col">
+            <p class="stop__depth">עומק 60 מ׳ · תיקיית המיומנות</p>
+            <h3><span class="kind">תיקייה</span> <code class="fname" dir="ltr" lang="en">quiz-maker/</code></h3>
+            <dl class="why">
+              <div><dt>מה זו?</dt><dd>התיקייה של המיומנות שיוצרת שאלות. כל מה שהמיומנות צריכה נמצא כאן.</dd></div>
+              <div><dt>למה צריך אותה?</dt><dd>כך ההוראות, התבנית והדוגמאות של מיומנות אחת נשמרים יחד, ולא מתערבבים עם מיומנויות אחרות.</dd></div>
+            </dl>
+            <p class="task"><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> גרדו את הכרטיס כדי לגלות מה הקובץ המרכזי עושה. אפשר גם ללחוץ על ״חשיפה״.</span></p>
+            <ul class="scratch-list">
+              <li class="scratch">
+                <div class="scratch__head"><span class="kind kind--file">קובץ</span><code class="fname" dir="ltr" lang="en">SKILL.md</code><button type="button" class="btn btn-action btn-action--small scratch__reveal">חשיפה</button></div>
+                <div class="scratch__surface"><p><strong>קובץ ההוראות של המיומנות.</strong> בראשו השדות <code dir="ltr" lang="en">name</code> ו־<code dir="ltr" lang="en">description</code>, ואחריהם ההוראות עצמן: מה לעשות, צעד אחרי צעד, ולאילו קבצים לפנות.</p></div>
+              </li>
+            </ul>
+            <h4 class="sub-title">ההוראות מפנות לקבצים אחרים</h4>
+            <p>ב־<code class="fname" dir="ltr" lang="en">SKILL.md</code>, <span data-term="instructions">קובץ ההוראות</span> של המיומנות, יש בסוף שתי שורות שמפנות לקבצים בתיקיות שמתחת. כל שורה היא נתיב: הדרך לקובץ, תיקייה אחרי תיקייה.</p>
+            <p class="task"><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> לחצו על כל אחת משתי השורות, ועקבו אחרי הכבל עד הקובץ שהיא מפנה אליו.</span></p>
+            <div class="cable" id="cable">
+              <div class="cable__lines" dir="ltr" lang="en">
+                <p class="cable__caption" dir="rtl" lang="he">מתוך <code>SKILL.md</code>:</p>
+                <button type="button" class="cable__line" aria-pressed="false" data-targets="template" data-note="השורה Template מפנה לתבנית [question-template.md] שבתיקייה [assets/]. כך התוצר תמיד ייבנה לפי אותו שלד."><b>Template:</b> assets/question-template.md</button>
+                <button type="button" class="cable__line" aria-pressed="false" data-targets="input output" data-note="השורה Examples מפנה לשתי דוגמאות שבתיקייה [references/]: דוגמת קלט ודוגמת פלט. כך ChatGPT רואה איך נראה תוצר תקין."><b>Examples:</b> references/sample-input.txt, sample-output.md</button>
+              </div>
+              <ul class="cable__tree" dir="ltr" lang="en" aria-hidden="true">
+                <li data-node="skill">quiz-maker/</li>
+                <li class="l1" data-node="assets">assets/</li>
+                <li class="l2" data-node="template">question-template.md</li>
+                <li class="l1" data-node="references">references/</li>
+                <li class="l2" data-node="input">sample-input.txt</li>
+                <li class="l2" data-node="output">sample-output.md</li>
+              </ul>
+              <svg class="cable__wires" aria-hidden="true"></svg>
+            </div>
+            <p id="cable-note" class="cable__note" aria-live="polite"></p>
+            <p class="key-line">קובץ משפיע על התוצר רק אם ההוראות מפנות אליו.</p>
+            <p class="branch-cue">שתי השורות מובילות שכבה אחת למטה, לשתי תיקיות שיושבות זו לצד זו בתוך <code class="fname" dir="ltr" lang="en">quiz-maker/</code>. בואו נציץ בהן.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="siblings" data-depth="80" aria-label="שתי התיקיות בתוך quiz-maker" role="group" data-path="quiz-plugin/skills/quiz-maker/">
+        <div class="container-xxl">
+          <div class="siblings__track">
+            <article class="panel">
+              <p class="stop__depth">עומק 80 מ׳ · לכאן מובילה השורה <span dir="ltr" lang="en">Template</span></p>
+              <h3><span class="kind">תיקייה</span> <code class="fname" dir="ltr" lang="en">assets/</code></h3>
+              <dl class="why">
+                <div><dt>מה זו?</dt><dd>תיקייה ל<span data-term="assets">חומרי עזר</span> שהמיומנות משתמשת בהם בזמן העבודה.</dd></div>
+                <div><dt>למה צריך אותה?</dt><dd>כך ההוראות נשארות קצרות, וחומרי העזר נשמרים בנפרד. בדוגמה שלנו יש בה קובץ אחד: התבנית <code class="fname" dir="ltr" lang="en">question-template.md</code>, השלד של התוצר.</dd></div>
+              </dl>
+              <p class="task"><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> גררו את הידית כדי להשוות בין התבנית הריקה לבין שאלה שנכתבה לפיה.</span></p>
+              <div class="compare" id="compare" style="--split: 50%">
+                <div class="compare__pane compare__pane--filled" aria-hidden="true">
+                  <p class="compare__label">שאלה לפי התבנית</p>
+                  <p>שאלה 2: מהו סימן אזהרה לפי הקטע?</p>
+                  <p>אפשרות א: הודעה קצרה.</p>
+                  <p>אפשרות ב: בקשה דחופה למסור סיסמה.</p>
+                  <p>אפשרות ג: כותרת בצבע כחול.</p>
+                  <p>תשובה נכונה: ב.</p>
+                  <p>משוב: הקטע מציג בקשה דחופה למסור סיסמה כסימן אזהרה.</p>
+                </div>
+                <div class="compare__pane compare__pane--blank" aria-hidden="true">
+                  <p class="compare__label">התבנית</p>
+                  <p>שאלה [מספר]: [נוסח השאלה].</p>
+                  <p>אפשרות א: [תשובה אפשרית].</p>
+                  <p>אפשרות ב: [תשובה אפשרית].</p>
+                  <p>אפשרות ג: [תשובה אפשרית].</p>
+                  <p>תשובה נכונה: [אות האפשרות].</p>
+                  <p>משוב: [הסבר המבוסס על קטע ההדרכה].</p>
+                </div>
+                <span class="compare__handle" aria-hidden="true"></span>
+                <label class="visually-hidden" for="compare-range">השוואה בין התבנית הריקה לבין שאלה שנכתבה לפיה</label>
+                <input class="compare__range" id="compare-range" type="range" min="0" max="100" value="50" aria-valuetext="מחצית תבנית ומחצית שאלה">
+              </div>
+              <p class="visually-hidden">התבנית: שאלה, שלוש אפשרויות, תשובה נכונה ומשוב. השאלה שנכתבה לפיה: מהו סימן אזהרה לפי הקטע? אפשרות א: הודעה קצרה. אפשרות ב: בקשה דחופה למסור סיסמה. אפשרות ג: כותרת בצבע כחול. תשובה נכונה: ב. משוב: הקטע מציג בקשה דחופה למסור סיסמה כסימן אזהרה.</p>
+            </article>
+            <article class="panel">
+              <p class="stop__depth">עומק 80 מ׳ · לכאן מובילה השורה <span dir="ltr" lang="en">Examples</span></p>
+              <h3><span class="kind">תיקייה</span> <code class="fname" dir="ltr" lang="en">references/</code></h3>
+              <dl class="why">
+                <div><dt>מה זו?</dt><dd>תיקייה לדוגמאות של קלט ופלט.</dd></div>
+                <div><dt>למה צריך אותה?</dt><dd>דוגמה מראה ל־ChatGPT בדיוק מה נכנס ומה צריך לצאת, וכך התוצאה עקבית. יש בה שני קבצים: <code class="fname" dir="ltr" lang="en">sample-input.txt</code> (דוגמת קלט) ו־<code class="fname" dir="ltr" lang="en">sample-output.md</code> (דוגמת פלט).</dd></div>
+              </dl>
+              <p class="task"><svg class="bi" aria-hidden="true"><use href="#i-flip"></use></svg><span><strong>מה עושים כאן?</strong> לחצו על הכרטיס כדי להפוך אותו: מצד אחד הקלט, ומהצד השני הפלט שנוצר ממנו.</span></p>
+              <div class="flip" id="flip">
+                <div class="flip__inner">
+                  <div class="flip__face flip__face--front">
+                    <p class="flip__file"><code dir="ltr" lang="en">sample-input.txt</code> · דוגמת קלט</p>
+                    <p>״לפני לחיצה על קישור יש לבדוק את כתובת השולח. בקשה דחופה למסור סיסמה היא סימן אזהרה. כאשר הודעה נראית חשודה, אין ללחוץ על הקישור ויש לדווח לגורם המוסמך.״</p>
+                  </div>
+                  <div class="flip__face flip__face--back">
+                    <p class="flip__file"><code dir="ltr" lang="en">sample-output.md</code> · דוגמת פלט, לפי התבנית</p>
+                    <p class="flip__q">שאלה 1: מה צריך לבדוק לפני לחיצה על קישור?<br>אפשרות א: כתובת השולח.<br>אפשרות ב: צבע הרקע.<br>אפשרות ג: מספר השורות בהודעה.<br>תשובה נכונה: א.<br>משוב: בקטע מוסבר שיש לבדוק את כתובת השולח לפני לחיצה על קישור.</p>
+                    <p class="flip__more">ועוד שתי שאלות באותו מבנה.</p>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-action btn-action--small" id="flip-btn" aria-pressed="false"><svg class="bi" aria-hidden="true"><use href="#i-flip"></use></svg><span>הצגת הפלט</span></button>
+            </article>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Sorting practice. First track: place the files. Refresh track: spot the misplaced files, then fix them. -->
+    <section id="wreck" class="scene scene--seabed" data-depth="100" data-path="quiz-plugin/skills/quiz-maker/" data-nav-section="wreck">
+      <div class="container-xxl">
+        <div class="panel">
+          <p class="stop__depth"><span data-track-only="refresh">בדיקה 1 מתוך 3 · </span>עומק 100 מ׳</p>
+          <h2 data-track-only="first">מסדרים את הקבצים</h2>
+          <h2 data-track-only="refresh">בודקים סידור קיים</h2>
+          <p class="task" data-track-only="first"><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> הקבצים התפזרו. גררו כל קובץ לתיקייה שלו, או לחצו על קובץ ואז על התיקייה. בסוף לחצו על ״בדיקת הסידור״.</span></p>
+          <div data-track-only="refresh">
+            <p class="audit__story">כך עמית סידר את <code class="fname" dir="ltr" lang="en">quiz-plugin</code>. נראה ששלושה קבצים נמצאים במקום הלא נכון. תפקידכם: למצוא אותם ולהחזיר אותם הביתה.</p>
+            <div class="stage-head">
+              <ol class="audit-steps" id="audit-steps" aria-label="שני שלבים בתרגול">
+                <li class="audit-steps__item" data-audit-step="spot"><span class="audit-steps__n" aria-hidden="true">1</span><span>מאתרים</span></li>
+                <li class="audit-steps__item" data-audit-step="fix"><span class="audit-steps__n" aria-hidden="true">2</span><span>מתקנים</span></li>
+              </ol>
+              <h3 class="stage-head__title" id="audit-stage-title" tabindex="-1">שלב 1 מתוך 2: מאתרים קבצים שלא במקום</h3>
+            </div>
+            <p class="task" id="audit-task-spot"><svg class="bi" aria-hidden="true"><use href="#i-search"></use></svg><span><strong>מה עושים כאן?</strong> בשלב הזה רק מאתרים, עוד לא מזיזים. לחצו על כל קובץ שנראה לכם שנמצא בתיקייה הלא נכונה, כדי לסמן אותו ״לתיקון״. לחיצה נוספת מבטלת את הסימון. בסוף לחצו על ״בדיקת הזיהוי״.</span></p>
+            <p class="task" id="audit-task-fix" hidden><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> הקבצים שמסומנים ״לתיקון״ נמצאים בתיקייה הלא נכונה. גררו כל אחד מהם לתיקייה שלו, או לחצו על הקובץ ואז על התיקייה. בסוף לחצו על ״בדיקת הסידור״, ונראה אם הבקשה עוברת את כל הדרך.</span></p>
+          </div>
+          <p id="wreck-hint" class="wreck__hint" aria-hidden="true"></p>
+          <div id="wreck-area" class="wreck">
+            <div class="wreck__tray" id="wreck-tray-box">
+              <h3>קבצים לשיבוץ</h3>
+              <div id="wreck-tray" class="wreck__chips"></div>
+            </div>
+            <div class="wreck__tree" id="wreck-tree"></div>
+          </div>
+          <div class="action-row">
+            <button type="button" class="btn btn-action" id="wreck-check"><svg class="bi" aria-hidden="true"><use href="#check-circle"></use></svg><span id="wreck-check-label">בדיקת הסידור</span></button>
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#wreck-reset">איפוס התרגול</button>
+            <button type="button" class="btn btn-outline-light" id="wreck-skip" hidden>דילוג על ההדגמה</button>
+          </div>
+          <p id="wreck-stale" class="stale-note" hidden>הסידור השתנה, בדקו שוב.</p>
+          <p id="wreck-summary" class="result-line" tabindex="-1"></p>
+          <ul id="wreck-details" class="wreck__details"></ul>
+          <div class="audit-next" id="audit-next-box" hidden>
+            <p class="audit-next__text">קראתם את המשוב? עכשיו מתקנים.</p>
+            <button type="button" class="btn audit-next__btn" id="audit-next">ממשיכים לשלב 2: מחזירים את הקבצים הביתה<svg class="bi" aria-hidden="true"><use href="#chevron-down"></use></svg></button>
+          </div>
+          <p>זו הדגמה של מה שקורה לבקשה, ולא הרצה אמיתית של פלאגין.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Refresh track: check 2 (paths and the description field) and check 3 (the produced questions). -->
+    <section id="checks" class="ascent checks" data-nav-section="checks" data-track-only="refresh" aria-labelledby="checks-title">
+      <div class="container-xxl">
+        <h2 id="checks-title" class="visually-hidden">בדיקות 2 ו־3: נתיבים, הפעלה ותוצר</h2>
+      </div>
+
+      <div class="stop" data-depth="60" data-path="SKILL.md: Template, description" data-ascent>
+        <div class="container-xxl">
+          <article class="panel stop__panel content-col">
+            <p class="stop__depth">בדיקה 2 מתוך 3 · עומק 60 מ׳</p>
+            <h3>בודקים נתיבים והפעלה</h3>
+            <p>הקבצים במקום, אבל זה לא מספיק: צריך גם ש<span data-term="instructions">קובץ ההוראות</span> ימצא אותם, ושהמיומנות תתעורר בזמן.</p>
+            <p>בסוף <code class="fname" dir="ltr" lang="en">SKILL.md</code> יש שורה בשם <code class="fname" dir="ltr" lang="en">Template</code>. היא כתובה כנתיב, תיקייה אחרי תיקייה, ומובילה לתבנית: הקובץ שקובע איך כל שאלה צריכה להיראות. אם הנתיב לא מוביל לקובץ, ChatGPT לא ימצא את התבנית.</p>
+            <div class="pathbreak" id="pathbreak">
+              <p class="task"><svg class="bi" aria-hidden="true"><use href="#i-search"></use></svg><span><strong>מה עושים כאן?</strong> בגרסה ישנה של הפלאגין של עמית, התבנית לא נמצאה. הנה מה שכתוב בהוראות, ומתחתיו מה שהיה בתיקיות בפועל. ענו על שאלה 1.</span></p>
+              <p class="pathbreak__line" dir="ltr" lang="en"><b>Template:</b> quiz-maker/assets/question-template.md</p>
+              <ul class="pathbreak__tree" dir="ltr" lang="en" aria-label="מה יש בתיקיות בפועל">
+                <li>quiz-maker/ <span>SKILL.md</span></li>
+                <li class="l1">assets/ <span class="pathbreak__empty" lang="he" dir="rtl">(ריקה)</span></li>
+                <li class="l1">references/ <span>question-template.md</span> <span>sample-input.txt</span> <span>sample-output.md</span></li>
+              </ul>
+              <div class="quick-checks" data-quick-checks="path"></div>
+            </div>
+            <h4 class="sub-title">ומה עם השדה <code class="fname" dir="ltr" lang="en">description</code>?</h4>
+            <p>בראש <code class="fname" dir="ltr" lang="en">SKILL.md</code> יש שדה בשם <code class="fname" dir="ltr" lang="en">description</code>: שורה אחת שמתארת מה המיומנות עושה. לפיה ChatGPT מחליט מתי להפעיל אותה.</p>
+            <p class="task"><svg class="bi" aria-hidden="true"><use href="#i-chat"></use></svg><span><strong>מה עושים כאן?</strong> ענו על שאלות 2 ו־3. לחצו על התשובה שנראית לכם נכונה, וקבלו משוב מיד.</span></p>
+            <div class="quick-checks" data-quick-checks="skills"></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="stop" id="output-check" data-depth="30" data-path="ChatGPT: בדיקת דוגמת שימוש" data-ascent>
+        <div class="container-xxl">
+          <article class="panel stop__panel content-col">
+            <p class="stop__depth">בדיקה 3 מתוך 3 · עומק 30 מ׳</p>
+            <h3>בודקים את התוצר</h3>
+            <p>הבדיקה האחרונה היא <span data-term="example">דוגמת שימוש</span>: עמית הדביק את קטע הפישינג, וקיבל את שלוש השאלות האלה. לא כולן תקינות.</p>
+            <div class="passage">
+              <p class="passage__label">קטע ההדרכה שהודבק:</p>
+              <p>״לפני לחיצה על קישור יש לבדוק את כתובת השולח. בקשה דחופה למסור סיסמה היא סימן אזהרה. כאשר הודעה נראית חשודה, אין ללחוץ על הקישור ויש לדווח לגורם המוסמך.״</p>
+            </div>
+            <div class="output-rules">
+              <p class="output-rules__title">שאלה תקינה עומדת בשני תנאים:</p>
+              <div class="output-rules__grid">
+                <div class="output-rules__rule">
+                  <p><strong>1. התוכן:</strong> מבוססת רק על מה שכתוב בקטע.</p>
+                </div>
+                <div class="output-rules__rule">
+                  <p><strong>2. המבנה:</strong> בנויה לפי התבנית, <code class="fname" dir="ltr" lang="en">question-template.md</code>. זה השלד שההוראות מפנות אליו, וכל שאלה צריכה למלא אותו:</p>
+                  <ol class="template-box" aria-label="התבנית">
+                    <li>שאלה [מספר]: [נוסח השאלה]</li>
+                    <li>שלוש אפשרויות: א, ב, ג</li>
+                    <li>תשובה נכונה: [אות]</li>
+                    <li>משוב: [הסבר מתוך הקטע]</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <p class="task"><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> בדקו כל שאלה מול שני התנאים. לחצו על כל שאלה שטעונה תיקון כדי לסמן אותה, ואז לחצו ״בדיקת התוצר״.</span></p>
+            <div class="output-audit" id="output-audit" role="group" aria-label="השאלות שהפלאגין יצר"></div>
+            <div class="action-row">
+              <button type="button" class="btn btn-action" id="output-audit-check"><svg class="bi" aria-hidden="true"><use href="#check-circle"></use></svg>בדיקת התוצר</button>
+            </div>
+            <p id="output-audit-summary" class="result-line" tabindex="-1"></p>
+            <ul id="output-audit-details" class="wreck__details"></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- First track: the four development stages on the way back up. -->
+    <section id="ascent" class="ascent" data-nav-section="ascent" data-track-only="first">
+      <div class="container-xxl">
+        <h2>ארבעת שלבי הפיתוח</h2>
+        <p class="ascent__intro panel content-col">עכשיו, כשאנחנו מכירים את החלקים, נעלה חזרה לפני המים דרך ארבעת השלבים שבהם בונים פלאגין כזה. בכל שלב נראה למה הוא חשוב ואיפה בפלאגין הוא קורה.</p>
+      </div>
+
+      <div class="stop" data-depth="80" data-path="שלב 1: הגדרת משימה" data-ascent>
+        <div class="container-xxl">
+          <article class="panel stop__panel content-col">
+            <p class="stop__depth">עומק 80 מ׳ · שלב 1 מתוך 4</p>
+            <h3>1. הגדרת המשימה</h3>
+            <dl class="why">
+              <div><dt>למה?</dt><dd>לפני שכותבים משהו, מחליטים בדיוק מה הפלאגין צריך לעשות. בלי הגדרה ברורה, ChatGPT ממלא את החסר בעצמו, והתוצאה משתנה מפעם לפעם.</dd></div>
+              <div><dt>איפה?</dt><dd>ההגדרה המרכזית כתובה בקובץ <code class="fname" dir="ltr" lang="en">SKILL.md</code>: בשדה <code class="fname" dir="ltr" lang="en">description</code> ובפסקה הראשונה של ההוראות. היא מופיעה גם ב־<code class="fname" dir="ltr" lang="en">README.md</code>, כדי שמי שמשתמש בפלאגין יבין מה הוא עושה.</dd></div>
+            </dl>
+            <p class="task"><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> חזרו לדוגמה שמלווה אותנו. בכל שאלה לחצו על התשובה שמתאימה לה, וראו איך המשימה מתחדדת.</span></p>
+            <div id="lens" class="lens">
+              <p class="lens__label">המשימה, כפי שתיכתב בהוראות לפלאגין:</p>
+              <p id="lens-text" class="lens__text">צור שאלות.</p>
+              <p id="lens-count" class="lens__count" aria-live="polite">דיוק: 0 מתוך 4</p>
+              <div id="lens-rings"></div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="stop" data-depth="60" data-path="שלב 2: כתיבת הוראות" data-ascent>
+        <div class="container-xxl">
+          <article class="panel stop__panel">
+            <p class="stop__depth">עומק 60 מ׳ · שלב 2 מתוך 4</p>
+            <h3>2. כתיבת ההוראות</h3>
+            <dl class="why content-col">
+              <div><dt>למה?</dt><dd>ההוראות הן מה ש־ChatGPT מבצע בפועל, צעד אחרי צעד. כל שורה שחסרה בהן נותנת לו מקום לאלתר.</dd></div>
+              <div><dt>איפה?</dt><dd>בגוף הקובץ <code class="fname" dir="ltr" lang="en">SKILL.md</code>, מתחת לשדה <code class="fname" dir="ltr" lang="en">description</code>.</dd></div>
+            </dl>
+            <div class="passage content-col">
+              <p class="passage__label">קטע ההדרכה שהדבקנו:</p>
+              <p>״לפני לחיצה על קישור יש לבדוק את כתובת השולח. בקשה דחופה למסור סיסמה היא סימן אזהרה. כאשר הודעה נראית חשודה, אין ללחוץ על הקישור ויש לדווח לגורם המוסמך.״</p>
+            </div>
+            <p class="task content-col"><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> מימין ארבע שורות מתוך ההוראות, ומשמאל השאלה שהפלאגין יצר מהקטע. כבו שורה, וראו מה משתבש בשאלה כשהשורה חסרה.</span></p>
+            <div class="row g-4">
+              <div class="col-md-5"><h4 class="saboteur-title">שורות מתוך ההוראות</h4><div id="saboteur"></div></div>
+              <div class="col-md-7"><h4 class="saboteur-title">השאלה שנוצרה</h4>
+                <div id="saboteur-output" class="saboteur-output" aria-live="polite"></div>
+                <ul id="saboteur-notes" class="saboteur-notes" aria-live="polite"></ul></div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="stop" data-depth="40" data-path="שלב 3: ארגון הקבצים" data-ascent>
+        <div class="container-xxl">
+          <article class="panel stop__panel content-col">
+            <p class="stop__depth">עומק 40 מ׳ · שלב 3 מתוך 4</p>
+            <h3>3. ארגון הקבצים</h3>
+            <p class="recall">זוכרים שסידרתם את הקבצים בתיקיות? זה בדיוק השלב הזה.</p>
+            <dl class="why">
+              <div><dt>למה?</dt><dd>ההוראות מוצאות קובץ רק לפי הנתיב שכתוב בהן. אם הקובץ לא נמצא בדיוק שם, ChatGPT לא ימצא אותו, והתוצר יאבד את המבנה או את הדוגמאות.</dd></div>
+              <div><dt>איפה?</dt><dd>בתיקייה של הפלאגין עצמה: כל קובץ נשמר בתיקייה שלו, וב־<code class="fname" dir="ltr" lang="en">SKILL.md</code> כתוב הנתיב אליו.</dd></div>
+            </dl>
+            <p class="task"><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> העבירו את העכבר על כל חלק בנתיב (או לחצו עליו), וראו לאיזו תיקייה הוא מוביל.</span></p>
+            <div class="pathwalk" id="pathwalk">
+              <p class="pathwalk__line" dir="ltr" lang="en"><b>Template:</b>
+                <button type="button" class="pathwalk__seg" data-step="0">quiz-maker/</button><button type="button" class="pathwalk__seg" data-step="1">assets/</button><button type="button" class="pathwalk__seg" data-step="2">question-template.md</button>
+              </p>
+              <ol class="pathwalk__steps" id="pathwalk-steps">
+                <li data-step="0">מתחילים בתיקייה של המיומנות, שבה נמצא <code dir="ltr" lang="en">SKILL.md</code>.</li>
+                <li data-step="1">נכנסים לתיקייה <code dir="ltr" lang="en">assets/</code>, תיקיית חומרי העזר.</li>
+                <li data-step="2">מגיעים לקובץ התבנית עצמו. אם הוא לא כאן, הנתיב מוביל למקום ריק.</li>
+              </ol>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="stop" data-depth="20" data-path="שלב 4: בדיקת דוגמת שימוש" data-ascent>
+        <div class="container-xxl">
+          <article class="panel stop__panel content-col">
+            <p class="stop__depth">עומק 20 מ׳ · שלב 4 מתוך 4</p>
+            <h3>4. בדיקת דוגמת שימוש</h3>
+            <dl class="why">
+              <div><dt>למה?</dt><dd>רק ב<span data-term="example">דוגמת שימוש</span>, כשמריצים את הפלאגין על קטע אמיתי, רואים אם ההוראות באמת עובדות. שאלה אחת שלא מבוססת על הקטע מספיקה כדי ללמד את הלומדים מידע שגוי.</dd></div>
+              <div><dt>איפה?</dt><dd>ב־ChatGPT עצמו: מדביקים קטע הדרכה, ומשווים את מה שהתקבל לקטע ולדוגמה שבקובץ <code class="fname" dir="ltr" lang="en">sample-output.md</code>.</dd></div>
+            </dl>
+            <p>הדבקנו את קטע ההדרכה על <strong>פישינג</strong>, וקיבלנו את השאלות האלה.</p>
+            <p class="task"><svg class="bi" aria-hidden="true"><use href="#pointer"></use></svg><span><strong>מה עושים כאן?</strong> לחצו על השאלה שאינה מבוססת על הקטע.</span></p>
+            <div id="inspector" class="inspector" role="group" aria-label="השאלות שהפלאגין יצר"></div>
+            <p id="inspector-feedback" class="result-line" aria-live="polite"></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final form: one question set per track, feedback per answer, submit to the LMS, then the summary. -->
+    <section id="logbook" class="logbook" data-depth="0" data-path="quiz-plugin/" data-ascent data-nav-section="logbook">
+      <div class="logbook__waves" aria-hidden="true"><svg class="wave wave--paper"><use href="#wave-shape"></use></svg></div>
+      <div class="container-xxl">
+        <h2>בודקים הבנה</h2>
+        <p class="logbook__lead" data-track-only="first">עליתם לפני המים! זה הזמן לבדוק מה נשאר איתכם מהצלילה: מה התפקיד של כל קובץ, ומה עושים בכל שלב. אל דאגה, אפשר לבדוק, לתקן ולבדוק שוב, כמה פעמים שתרצו.</p>
+        <p class="logbook__lead" data-track-only="refresh">סיימתם לבדוק את הפלאגין של עמית. עכשיו תורכם להוכיח שאתם בודקי פלאגינים: ארבעה מקרים מהשטח ושאלה אחת בשבילכם. אפשר לבדוק, לתקן ולבדוק שוב.</p>
+        <form id="logbook-form" novalidate autocomplete="off">
+          <div class="quiz" data-track-only="refresh">
+          <fieldset class="question">
+            <legend>1. איזה קובץ בודקים לכל תקלה?</legend>
+            <p class="question__hint">לכל תקלה שמופיעה, לחצו על הקובץ שכדאי לבדוק ולתקן.</p>
+            <div id="r-match-game" class="match"></div>
+            <div id="fb-r-match" class="feedback"></div>
+          </fieldset>
+
+          <div class="question">
+            <label class="form-label question__title" for="r-stage">2. השאלות שהפלאגין יצר כוללות מידע שלא מופיע בקטע. באיזה שלב מתקנים את זה?</label>
+            <p class="question__hint">בחרו שלב מהרשימה.</p>
+            <select class="form-select" id="r-stage" aria-describedby="fb-r-stage">
+              <option value="">בחרו שלב</option>
+              <option value="organize">ארגון הקבצים</option>
+              <option value="test">בדיקת דוגמת שימוש</option>
+              <option value="write">כתיבת הוראות</option>
+              <option value="task">הגדרת המשימה</option>
+            </select>
+            <div id="fb-r-stage" class="feedback"></div>
+          </div>
+
+          <fieldset class="question" aria-describedby="fb-r-checks">
+            <legend>3. אילו מהמצבים הבאים מראים שקובץ טעון תיקון?</legend>
+            <p class="question__hint">אפשר לסמן תשובה אחת או שתיים, לא יותר.</p>
+            <div class="form-check" data-r-check="skillspot"><input class="form-check-input" type="checkbox" id="r-check-skillspot"><label class="form-check-label" for="r-check-skillspot"><span dir="ltr" lang="en">SKILL.md</span> שמור בתיקייה <span dir="ltr" lang="en">skills/</span>, ולא בתוך <span dir="ltr" lang="en">quiz-maker/</span></label></div>
+            <div class="form-check" data-r-check="path"><input class="form-check-input" type="checkbox" id="r-check-path"><label class="form-check-label" for="r-check-path">השורה <span dir="ltr" lang="en">Template</span> מפנה אל <span dir="ltr" lang="en">assets/</span>, אבל התבנית שמורה ב־<span dir="ltr" lang="en">references/</span></label></div>
+            <div class="form-check" data-r-check="readme"><input class="form-check-input" type="checkbox" id="r-check-readme"><label class="form-check-label" for="r-check-readme"><span dir="ltr" lang="en">README.md</span> שמור בתיקייה הראשית</label></div>
+            <div id="fb-r-checks" class="feedback"></div>
+          </fieldset>
+
+          <fieldset class="question" aria-describedby="r-pick-tree fb-r-pick">
+            <legend>4. לפניכם סידור של הפלאגין. איזה קובץ טעון תיקון?</legend>
+            <p class="question__hint">עברו על העץ ובחרו קובץ אחד.</p>
+            <ul class="mini-tree" id="r-pick-tree" dir="ltr" lang="en" aria-label="הסידור לבדיקה">
+              <li>quiz-plugin/ <span>plugin.json</span> <span>README.md</span></li>
+              <li class="l1">skills/quiz-maker/ <span>SKILL.md</span></li>
+              <li class="l2">assets/ <span>question-template.md</span> <span>sample-input.txt</span></li>
+              <li class="l2">references/ <span>sample-output.md</span></li>
+            </ul>
+            <div class="pick-options" id="r-pick">
+              <div class="form-check" data-r-pick="skillfile"><input class="form-check-input" type="radio" name="r-pick" id="r-pick-skillfile" value="skillfile"><label class="form-check-label" for="r-pick-skillfile" dir="ltr" lang="en">SKILL.md</label></div>
+              <div class="form-check" data-r-pick="template"><input class="form-check-input" type="radio" name="r-pick" id="r-pick-template" value="template"><label class="form-check-label" for="r-pick-template" dir="ltr" lang="en">question-template.md</label></div>
+              <div class="form-check" data-r-pick="input"><input class="form-check-input" type="radio" name="r-pick" id="r-pick-input" value="input"><label class="form-check-label" for="r-pick-input" dir="ltr" lang="en">sample-input.txt</label></div>
+              <div class="form-check" data-r-pick="output"><input class="form-check-input" type="radio" name="r-pick" id="r-pick-output" value="output"><label class="form-check-label" for="r-pick-output" dir="ltr" lang="en">sample-output.md</label></div>
+            </div>
+            <div id="fb-r-pick" class="feedback"></div>
+          </fieldset>
+
+          <div class="question question--open">
+            <label class="form-label question__title" for="r-learned">5. דבר אחד שאבדוק מעכשיו בפלאגין שלי <span class="optional">(רשות)</span></label>
+            <p class="question__hint" id="r-learned-hint">אין כאן תשובה נכונה או שגויה. כתבו במילים שלכם.</p>
+            <textarea class="form-control" id="r-learned" rows="3" maxlength="255" aria-describedby="r-learned-hint r-learned-count fb-r-learned"></textarea>
+            <p id="r-learned-count" class="char-count">0/255 תווים</p>
+            <div id="fb-r-learned" class="feedback" aria-live="polite"></div>
+          </div>
+          </div>
+
+          <div class="quiz" data-track-only="first">
+          <fieldset class="question">
+            <legend>1. מה התפקיד של כל קובץ?</legend>
+            <p class="question__hint">לכל קובץ שמופיע, לחצו על התפקיד המתאים.</p>
+            <div id="match-game" class="match"></div>
+            <div id="fb-match" class="feedback"></div>
+          </fieldset>
+
+          <div class="question">
+            <label class="form-label question__title" for="q-first">2. מה עושים ראשון כשמתחילים לפתח פלאגין?</label>
+            <p class="question__hint">בחרו תשובה מהרשימה.</p>
+            <select class="form-select" id="q-first" aria-describedby="fb-first">
+              <option value="">בחרו פעולה</option>
+              <option value="test">בדיקת דוגמת שימוש</option>
+              <option value="organize">ארגון הקבצים</option>
+              <option value="task">הגדרת המשימה</option>
+              <option value="write">כתיבת הוראות</option>
+            </select>
+            <div id="fb-first" class="feedback"></div>
+          </div>
+
+          <fieldset class="question" aria-describedby="fb-checks">
+            <legend>3. אילו בדיקות צריך לבצע כדי לוודא שהתוצר תקין?</legend>
+            <p class="question__hint">אפשר לסמן יותר מתשובה אחת.</p>
+            <div class="form-check" data-check="grounded"><input class="form-check-input" type="checkbox" id="q-check-grounded"><label class="form-check-label" for="q-check-grounded">השאלות מבוססות על קטע ההדרכה</label></div>
+            <div class="form-check" data-check="format"><input class="form-check-input" type="checkbox" id="q-check-format"><label class="form-check-label" for="q-check-format">התוצר בנוי לפי התבנית</label></div>
+            <div class="form-check" data-check="folders"><input class="form-check-input" type="checkbox" id="q-check-folders"><label class="form-check-label" for="q-check-folders">מספר התיקיות שווה למספר השאלות</label></div>
+            <div id="fb-checks" class="feedback"></div>
+          </fieldset>
+
+          <div class="question">
+            <label class="form-label question__title" for="q-count">4. לכמה תיקיות שונות מפנה הקובץ <span dir="ltr" lang="en">SKILL.md</span> בדוגמה שלנו?</label>
+            <p class="question__hint">הקלידו מספר. הכוונה לתיקיות שאליהן מפנות השורות <span dir="ltr" lang="en">Template</span> ו־<span dir="ltr" lang="en">Examples</span> בסוף ההוראות.</p>
+            <input class="form-control question__number" type="number" id="q-count" inputmode="numeric" step="any" aria-describedby="fb-count">
+            <div id="fb-count" class="feedback"></div>
+          </div>
+
+          <div class="question question--open">
+            <label class="form-label question__title" for="q-learned">5. דבר אחד שלמדתי ביחידה <span class="optional">(רשות)</span></label>
+            <p class="question__hint" id="q-learned-hint">אין כאן תשובה נכונה או שגויה. כתבו במילים שלכם.</p>
+            <textarea class="form-control" id="q-learned" rows="3" maxlength="255" aria-describedby="q-learned-hint q-learned-count fb-learned"></textarea>
+            <p id="q-learned-count" class="char-count">0/255 תווים</p>
+            <div id="fb-learned" class="feedback" aria-live="polite"></div>
+          </div>
+          </div>
+
+          <div class="logbook__actions">
+            <button type="submit" id="logbook-check" class="btn btn-dive">בדיקת התשובות</button>
+            <button type="button" id="logbook-submit" class="btn btn-outline-dark" disabled aria-describedby="logbook-submit-hint">הגשה</button>
+          </div>
+          <p id="logbook-submit-hint" class="submit-hint">אפשר להגיש אחרי בדיקת התשובות. אחרי ההגשה אי אפשר לשנות תשובות.</p>
+          <p id="logbook-stale" class="stale-note stale-note--light" hidden>שיניתם תשובה, בדקו שוב.</p>
+          <p id="logbook-summary" class="result-line" tabindex="-1"></p>
+        </form>
+        <div id="logbook-submit-status" class="submit-status" role="status" tabindex="-1" hidden></div>
+        <button type="button" id="logbook-retry" class="btn btn-dive" hidden>ניסיון חוזר לשמירה</button>
+
+        <section id="debrief" class="debrief" aria-labelledby="debrief-title" hidden>
+          <h2 id="debrief-title">סיכום</h2>
+          <div id="debrief-result"></div>
+          <h3 class="chain__title">איך כל החלקים עובדים יחד</h3>
+          <ol class="chain">
+            <li><strong>מגיעה בקשה:</strong> ״הנה קטע על פישינג, צור ממנו שאלות תרגול״.</li>
+            <li><code class="fname" dir="ltr" lang="en">plugin.json</code> בתיקייה הראשית: המערכת מזהה את הפלאגין.</li>
+            <li>השדה <code class="fname" dir="ltr" lang="en">description</code> ב־<code class="fname" dir="ltr" lang="en">SKILL.md</code>: ChatGPT מחליט להפעיל את המיומנות.</li>
+            <li>ההוראות ב־<code class="fname" dir="ltr" lang="en">SKILL.md</code>: ChatGPT מבצע את המשימה צעד אחרי צעד.</li>
+            <li>השורות <code class="fname" dir="ltr" lang="en">Template</code> ו־<code class="fname" dir="ltr" lang="en">Examples</code>: מובילות לתבנית שב־<code class="fname" dir="ltr" lang="en">assets/</code> ולדוגמאות שב־<code class="fname" dir="ltr" lang="en">references/</code>.</li>
+            <li><strong>התוצאה:</strong> שלוש שאלות במבנה קבוע, על סמך הקטע בלבד.</li>
+          </ol>
+          <p class="chain__note">כל קובץ במקום שלו הוא חוליה בשרשרת. קובץ שזז ממקומו שובר את השרשרת מאותה נקודה והלאה.</p>
+          <div class="checklist" data-track-only="refresh">
+            <h3 class="chain__title">רשימת בדיקה לפלאגין הבא שלכם</h3>
+            <p>חמש בדיקות קצרות שאפשר לעשות על כל פלאגין שכבר בניתם:</p>
+            <ul class="checklist__list" id="refresh-checklist"></ul>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- Dialogs: reset the sorting practice, and the "שימו לב" warning before changing track. -->
+  <div class="modal fade" id="wreck-reset" tabindex="-1" aria-labelledby="wreck-reset-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title" id="wreck-reset-title">לאפס את התרגול?</h2></div>
+        <div class="modal-body"><span data-track-only="first">כל השיבוצים יימחקו.</span><span data-track-only="refresh" id="wreck-reset-refresh">הסידור יחזור למצב שבו עמית השאיר אותו, והסימונים יימחקו.</span> התשובות בבדיקת ההבנה יישארו.</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">ביטול</button>
+          <button type="button" class="btn btn-dive" id="wreck-reset-confirm" data-bs-dismiss="modal">איפוס</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="track-switch" tabindex="-1" aria-labelledby="track-switch-title" aria-describedby="track-switch-body" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title d-flex align-items-center gap-2" id="track-switch-title"><svg class="bi modal-title__warn" aria-hidden="true"><use href="#exclamation-triangle"></use></svg>שימו לב</h2>
+        </div>
+        <div class="modal-body" id="track-switch-body">
+          <p class="mb-2">עוברים למסלול <strong id="track-switch-name"></strong>?</p>
+          <div class="switch-preview" id="track-switch-preview"></div>
+          <p class="switch-warning"><svg class="bi" aria-hidden="true"><use href="#exclamation-triangle"></use></svg><span>התשובות שלכם בתרגולים ובבדיקת ההבנה יימחקו, ותתחילו אותם מחדש במסלול החדש.</span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">נשארים במסלול הנוכחי</button>
+          <button type="button" class="btn btn-dive" id="track-switch-confirm">כן, להחליף מסלול</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Glossary side panel, filled from content.js. -->
+  <div class="offcanvas offcanvas-start glossary" tabindex="-1" id="glossary" aria-labelledby="glossary-title">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title" id="glossary-title"><svg class="bi" aria-hidden="true"><use href="#book"></use></svg> מילון מושגים</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="סגירת המילון"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p class="glossary__intro">חמש מילים שחוזרות ביחידה, בשפה פשוטה. אפשר לפתוח את המילון בכל רגע, ולחזור בדיוק לאותו מקום.</p>
+      <dl class="glossary__list" id="glossary-list"></dl>
+    </div>
+  </div>
+
+  <!-- Footer: brand and rights, page links (per track), credits and AI disclosure. -->
+  <footer class="site-footer" data-bs-theme="dark">
+    <div class="container-xxl">
+      <div class="row g-4">
+        <div class="col-md-5">
+          <p class="d-flex align-items-center gap-2 site-footer__brand"><svg class="logo-mark" aria-hidden="true"><use href="#logo-mark"></use></svg>צוללים לתוך פלאגין</p>
+          <p>&copy; 2026 דן כהן ורומי מילר. קבוצה 12, קורס תכנות 3.</p>
+          <p>מטלת אמצע - דוגמה לימודית ללקוח מדומה.</p>
+        </div>
+        <nav class="col-md-3" aria-label="קישורים בתחתית העמוד">
+          <ul class="list-unstyled">
+            <li data-track-only="none first"><a href="#what-is-plugin">מה זה פלאגין</a></li>
+            <li data-track-only="refresh"><a href="#example">הדוגמה</a></li>
+            <li data-track-only="none first"><a href="#dive">מבנה התיקיות</a></li>
+            <li><a href="#wreck"><span data-track-only="none first">סידור הקבצים</span><span data-track-only="refresh">בדיקת הסידור</span></a></li>
+            <li data-track-only="none first"><a href="#ascent">שלבי הפיתוח</a></li>
+            <li data-track-only="refresh"><a href="#checks">נתיבים ותוצר</a></li>
+            <li><a href="#logbook">בדיקת הבנה</a></li>
+          </ul>
+        </nav>
+        <div class="col-md-4">
+          <p class="site-footer__brand">קרדיטים</p>
+          <ul class="list-unstyled">
+            <li>שימוש ב־AI: הקוד, הטקסטים, תסריט הסרטון והבדיקות נכתבו בסיוע Claude של Anthropic, ונבדקו ונערכו על ידי הצוות.</li>
+            <li>Bootstrap 5.3.8 ו־Bootstrap Icons, רישיון MIT</li>
+            <li>גופן Assistant, רישיון OFL</li>
+            <li>עטיפת SCORM של pipwerks (Philip Hutchison), רישיון MIT</li>
+            <li>סרטון ההסבר הופק על ידי הצוות ב־HyperFrames (בעזרת AI). הקריינות נוצרה ב־AI: הקול Danit של ElevenLabs (elevenlabs.io)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

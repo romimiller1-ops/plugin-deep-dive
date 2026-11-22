@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="deepDivePluginSCORM12" version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+    http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+
+  <!-- Package metadata -->
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+
+  <!-- Course structure: one SCO -->
+  <organizations default="org1">
+    <organization identifier="org1">
+      <title>צוללים לתוך פלאגין</title>
+      <item identifier="item1" identifierref="resource1" isvisible="true">
+        <title>צוללים לתוך פלאגין: מבנה הפלאגין ושלבי הפיתוח שלו</title>
+      </item>
+    </organization>
+  </organizations>
+
+  <!-- Resources: every file in the package -->
+  <resources>
+    <resource identifier="resource1"
+              type="webcontent"
+              adlcp:scormType="sco"
+              href="index.html">
+      <file href="index.html"/>
+      <file href="README.md"/>
+      <file href="js/vendor/scorm-api-wrapper.js"/>
+      <file href="assets/favicon.svg"/>
+      <file href="assets/fonts/assistant.ttf"/>
+      <file href="assets/fonts/ofl-license.txt"/>
+      <file href="assets/icons/bootstrap-icons-license.txt"/>
+      <file href="assets/media/plugin-explainer-poster.jpg"/>
+      <file href="assets/media/plugin-explainer.he.mp4"/>
+      <file href="assets/media/plugin-explainer.he.vtt"/>
+      <file href="assets/vendor/bootstrap/license.txt"/>
+      <file href="assets/vendor/bootstrap/bootstrap.min.js"/>
+      <file href="assets/vendor/bootstrap/bootstrap.rtl.min.css"/>
+      <file href="css/main.css"/>
+      <file href="js/app.js"/>
+      <file href="js/core/a11y.js"/>
+      <file href="js/core/lms.js"/>
+      <file href="js/core/scoring.js"/>
+      <file href="js/core/state.js"/>
+      <file href="js/core/track.js"/>
+      <file href="js/data/content.js"/>
+      <file href="js/form/logbook.js"/>
+      <file href="js/form/report.js"/>
+      <file href="js/games/explore.js"/>
+      <file href="js/games/quickchecks.js"/>
+      <file href="js/games/scratch.js"/>
+      <file href="js/games/stations.js"/>
+      <file href="js/games/wreck.js"/>
+      <file href="js/motion/ambient.js"/>
+      <file href="js/motion/engine.js"/>
+      <file href="js/ui/glossary.js"/>
+      <file href="js/ui/textsize.js"/>
+      <file href="js/ui/tooltip.js"/>
+    </resource>
+  </resources>
+
+</manifest>
