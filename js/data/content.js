@@ -187,6 +187,9 @@ Dive.content = {
         test: "בחרתם בבדיקה. אבל בלי משימה מוגדרת אין למה להשוות את התוצר, ולכן הגדרת המשימה באה ראשונה."
       }
     },
+    /* Q3 instruction: at most two ticks, as in the refresh track. Ticking all three is a validation message, not a wrong answer. */
+    checksMax: 2,
+    checksTooMany: "סימנתם את כל שלוש האפשרויות. לפי ההנחיה אפשר לסמן תשובה אחת או שתיים: בחרו רק את הבדיקות שבאמת נחוצות.",
     checks: {
       grounded: {
         right: true,

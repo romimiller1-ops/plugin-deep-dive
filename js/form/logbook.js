@@ -317,6 +317,11 @@ Dive.logbook = (function () {
       missing("match", "match", results.match.remaining === 1 ? "נותר קובץ אחד בלי תפקיד." : "נותרו " + results.match.remaining + " קבצים בלי תפקיד.", match.firstButton());
       missing("first", "first", "בחרו פעולה.", step);
       missing("checks", "checks", "סמנו לפחות אפשרות אחת.", document.getElementById("q-check-grounded"));
+      var tickedCount = Object.keys(picked).filter(function (key) { return picked[key]; }).length;
+      if (tickedCount > data.form.checksMax) {
+        setFeedback("checks", "invalid", data.form.checksTooMany);
+        problems.push({ element: document.getElementById("q-check-grounded"), kind: "invalid" });
+      }
       missing("count", "count", "כתבו מספר.", count);
       if (results.count.status === "invalid") {
         setFeedback("count", "invalid", data.form.count.feedback[results.count.reason]);
@@ -676,7 +681,7 @@ Dive.debrief = (function () {
     var lines = [];
 
     lines.push("<li>" + (refresh ? "תיקון הסידור של עמית" : "שיבוץ הקבצים") + ": " + (wreckValid ? wreck.result.score + " מתוך 6 במקום" : "עדיין לא נבדק") + "</li>");
-    lines.push("<li>בדיקת ההבנה: " + (formValid ? form.result.score + " מתוך 4 נקודות" : "עדיין לא נבדק") + "</li>");
+    lines.push("<li>בדיקת ההבנה: " + (formValid ? Math.round(form.result.score * 100) / 100 + " מתוך 4 נקודות" : "עדיין לא נבדק") + "</li>");
 
     var message = refresh
       ? "כדי לראות את התמונה המלאה, תקנו ובדקו גם את הסידור של עמית."

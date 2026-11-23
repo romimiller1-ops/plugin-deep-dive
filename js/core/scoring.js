@@ -32,11 +32,14 @@ Dive.scoring = (function () {
     if (answered < list.length) {
       return { status: "missing", remaining: list.length - answered };
     }
+    /* Each pair is worth an equal share of the point: 4 of 5 right is 0.8. */
     var right = list.filter(function (item) { return pairs[item.id] === item.answer; }).length;
-    if (right === list.length) {
-      return { status: "ok", points: 1, right: right };
-    }
-    return right >= 3 ? { status: "partial", points: 0.5, right: right } : { status: "bad", points: 0, right: right };
+    return { status: level(right, list.length), points: right / list.length, right: right };
+  }
+
+  /* ok: all right, bad: none right, partial: anything in between. */
+  function level(right, total) {
+    return right === total ? "ok" : right === 0 ? "bad" : "partial";
   }
 
   function scoreFirstStep(value, right) {
@@ -48,21 +51,17 @@ Dive.scoring = (function () {
   }
 
   /* picked: { key: bool }. defs: { key: { right } }; defaults to the first-track checks.
-     Any wrong pick (a distractor) fails the question; every right pick and no wrong one passes it. */
+     Every option is one decision worth an equal share of the point: ticking a right option, or leaving
+     a wrong one unticked, earns its share. With 3 options: one right tick plus one wrong tick is 1/3.
+     The form allows at most two ticks (checksMax), so ticking everything cannot collect points. */
   function scoreChecks(picked, defs) {
     var all = defs || Dive.content.form.checks;
     var keys = Object.keys(all);
     if (!keys.some(function (key) { return picked[key]; })) {
       return { status: "missing" };
     }
-    if (keys.some(function (key) { return picked[key] && !all[key].right; })) {
-      return { status: "bad", points: 0, reason: "distractor" };
-    }
-    var missed = keys.filter(function (key) { return all[key].right && !picked[key]; });
-    if (!missed.length) {
-      return { status: "ok", points: 1 };
-    }
-    return { status: "partial", points: 0.5, reason: "missed", missed: missed };
+    var right = keys.filter(function (key) { return Boolean(picked[key]) === all[key].right; }).length;
+    return { status: level(right, keys.length), points: right / keys.length, right: right };
   }
 
   /* raw: the field's value. badInput: true when the browser could not read a number (letters were typed).

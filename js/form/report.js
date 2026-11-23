@@ -65,13 +65,13 @@ Dive.report = (function () {
     return pad(date.getHours()) + ":" + pad(date.getMinutes()) + ":" + pad(date.getSeconds());
   }
 
-  /* SCORM 1.2 result: "correct", "wrong", or a decimal. A partly right answer (half a point in the score)
-     is reported as 0.5, so the LMS report matches the score instead of showing it as wrong. */
-  function outcome(status) {
-    if (status === "ok") {
+  /* SCORM 1.2 result: "correct", "wrong", or a decimal. A partly right answer is reported as its share of
+     the point (for example 0.8 or 0.33), so the LMS report matches the score instead of showing it as wrong. */
+  function outcome(result) {
+    if (result.status === "ok") {
       return "correct";
     }
-    return status === "partial" ? "0.5" : "wrong";
+    return result.status === "partial" ? String(Math.round(result.points * 100) / 100) : "wrong";
   }
 
   /* Refresh Q1: "symptom: chosen file" for every symptom, in the order the question shows them. */
@@ -134,7 +134,7 @@ Dive.report = (function () {
         type: "matching",
         student_response: cleanText(matchingResponse(answers.pairs)),
         pattern: cleanText(matchingResponse(correctPairs())),
-        result: outcome(results.match.status),
+        result: outcome(results.match),
         weighting: "1",
         time: time
       },
@@ -143,7 +143,7 @@ Dive.report = (function () {
         type: "choice",
         student_response: cleanText(firstStepText(answers.first)),
         pattern: cleanText(firstStepText(Dive.content.form.firstStep.right)),
-        result: outcome(results.first.status),
+        result: outcome(results.first),
         weighting: "1",
         time: time
       },
@@ -152,7 +152,7 @@ Dive.report = (function () {
         type: "choice",
         student_response: cleanText(checksResponse(answers.picked)),
         pattern: cleanText(checksPattern()),
-        result: outcome(results.checks.status),
+        result: outcome(results.checks),
         weighting: "1",
         time: time
       },
@@ -161,7 +161,7 @@ Dive.report = (function () {
         type: "numeric",
         student_response: String(answers.count).trim(),
         pattern: String(Dive.content.form.count.right),
-        result: outcome(results.count.status),
+        result: outcome(results.count),
         weighting: "1",
         time: time
       }
@@ -176,7 +176,7 @@ Dive.report = (function () {
         type: "matching",
         student_response: cleanText(symptomResponse(answers.pairs)),
         pattern: cleanText(symptomPattern()),
-        result: outcome(results.match.status),
+        result: outcome(results.match),
         weighting: "1",
         time: time
       },
@@ -185,7 +185,7 @@ Dive.report = (function () {
         type: "choice",
         student_response: cleanText(optionText("r-stage", answers.stage)),
         pattern: cleanText(optionText("r-stage", cfg.stage.right)),
-        result: outcome(results.stage.status),
+        result: outcome(results.stage),
         weighting: "1",
         time: time
       },
@@ -194,7 +194,7 @@ Dive.report = (function () {
         type: "choice",
         student_response: cleanText(labelsResponse("r-check-", cfg.checks, answers.picked)),
         pattern: cleanText(labelsResponse("r-check-", cfg.checks, rightPicks(cfg.checks))),
-        result: outcome(results.checks.status),
+        result: outcome(results.checks),
         weighting: "1",
         time: time
       },
@@ -203,7 +203,7 @@ Dive.report = (function () {
         type: "choice",
         student_response: cleanText(fileNameOf(answers.pick)),
         pattern: cleanText(fileNameOf(cfg.pick.right)),
-        result: outcome(results.pick.status),
+        result: outcome(results.pick),
         weighting: "1",
         time: time
       }
