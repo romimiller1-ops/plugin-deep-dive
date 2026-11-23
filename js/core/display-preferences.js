@@ -1,12 +1,12 @@
 /* Learner preferences that must be in place before the first paint:
-   motion, text size, and the stored learning track.
+   motion and text size.
    Loaded synchronously in <head>, so the page never jumps from one size to another. */
 window.Dive = window.Dive || {};
 
 document.documentElement.classList.add("js");
 
 /* Small preference store. localStorage keeps a choice in this browser;
-   inside an LMS, lms.js also mirrors it to cmi.suspend_data through onSave. */
+   inside an LMS, lms-connection.js also mirrors it to cmi.suspend_data through onSave. */
 Dive.prefs = (function () {
   var PREFIX = "dive-";
   var listeners = [];

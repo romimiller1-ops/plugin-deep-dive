@@ -1,5 +1,5 @@
 /* Text size buttons in the top bar: normal, medium, large.
-   The size itself is applied in a11y.js (before the first paint); this module only wires the buttons. */
+   The size itself is applied in display-preferences.js (before the first paint); this module only wires the buttons. */
 window.Dive = window.Dive || {};
 
 Dive.textSizeControl = (function () {

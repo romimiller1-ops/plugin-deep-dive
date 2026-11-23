@@ -30,7 +30,7 @@
 
 ## חיבור ל־LMS (SCORM 1.2)
 
-כל הקריאות למערכת עוברות דרך `js/core/lms.js`, שמשתמש בעטיפה של pipwerks (`js/vendor/scorm-api-wrapper.js`).
+כל הקריאות למערכת עוברות דרך `js/core/lms-connection.js`, שמשתמש בעטיפה של pipwerks (`js/vendor/scorm-api-wrapper.js`).
 
 - **בכניסה:** שם הלומד נקרא מ־`cmi.core.student_name` ומוצג בברכה ("Last, First" מוצג כ־"First Last"). הסטטוס מסומן `incomplete`.
 - **בהגשה:** כל שאלה נשלחת כ־`cmi.interactions.n` נפרד, בסדר הזה:
@@ -47,27 +47,32 @@
 ## מבנה הקבצים
 
 ```
-index.html                 the page (one page, both tracks)
-imsmanifest.xml            SCORM 1.2 manifest
-README.md                  this file
-css/main.css               all styles (tokens in :root)
-js/app.js                  bootstrap: starts every module in order
-js/core/a11y.js            preferences before first paint: text size, motion
-js/core/lms.js             SCORM adapter (the only place that talks to the LMS)
-js/core/state.js           learner state and shared UI helpers
-js/core/scoring.js         pure scoring and validation
-js/core/track.js           learning-track choice and switching
-js/data/content.js         all texts, answers and feedback
-js/form/logbook.js         final form (both tracks) and the closing summary
-js/form/report.js          builds the SCORM interaction records
-js/games/*.js              the interactive activities
-js/motion/*.js             depth gauge and background motion
-js/ui/glossary.js          glossary terms and side panel
-js/ui/textsize.js          text-size buttons
-js/ui/navfit.js            top menu: full when it fits, folded otherwise
-js/ui/tooltip.js           accessible tooltips for the icon buttons
-js/vendor/                 pipwerks SCORM wrapper
-assets/                    favicon, font, video, Bootstrap (with licenses)
+index.html                            the page (one page, both tracks)
+imsmanifest.xml                       SCORM 1.2 manifest
+README.md                             this file
+css/main.css                          all styles (tokens in :root)
+js/app.js                             starts every module in order
+js/core/display-preferences.js        text size and motion, applied before the first paint
+js/core/lms-connection.js             SCORM adapter (the only place that talks to the LMS)
+js/core/learner-state.js              learner state and shared UI helpers
+js/core/scoring.js                    pure scoring and validation
+js/core/learning-track.js             learning-track choice and switching
+js/data/learning-content.js           all texts, answers and feedback
+js/form/final-form.js                 final form (both tracks) and the closing summary
+js/form/lms-report.js                 builds the SCORM interaction records
+js/activities/folder-exploration.js   activities in the opening and the folder dive
+js/activities/scratch-cards.js        scratch cards (with a button alternative)
+js/activities/file-sorting.js         sorting the files into folders (refresh: spot, then fix)
+js/activities/refresh-checks.js       refresh track: path, description and output checks
+js/activities/development-stages.js   the four development stages
+js/motion/scroll-engine.js            scroll position, depth gauge and current section
+js/motion/background-animation.js     decorative background animation
+js/ui/glossary.js                     glossary terms and side panel
+js/ui/text-size-buttons.js            text-size buttons
+js/ui/menu-fit.js                     top menu: full when it fits, folded otherwise
+js/ui/tooltip.js                      accessible tooltips for the icon buttons
+js/vendor/scorm-api-wrapper.js        pipwerks SCORM wrapper
+assets/                               favicon, font, video, Bootstrap (with licenses)
 ```
 
 ## נגישות
@@ -80,7 +85,7 @@ assets/                    favicon, font, video, Bootstrap (with licenses)
 
 ## קרדיטים ורישיונות
 
-- Bootstrap 5.3.8 ו־Bootstrap Icons: רישיון MIT (`assets/vendor/bootstrap/license.txt`, `assets/icons/bootstrap-icons-license.txt`)
+- Bootstrap 5.3.8 ו־Bootstrap Icons: רישיון MIT (`assets/vendor/bootstrap/bootstrap-license.txt`, `assets/icons/bootstrap-icons-license.txt`)
 - גופן Assistant: רישיון SIL OFL (`assets/fonts/ofl-license.txt`)
 - עטיפת SCORM של pipwerks: רישיון MIT
 - סרטון ההסבר הופק על ידי הצוות ב־HyperFrames. הקריינות נוצרה ב־AI: הקול Danit של ElevenLabs (elevenlabs.io).

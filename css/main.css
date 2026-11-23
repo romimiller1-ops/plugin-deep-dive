@@ -67,7 +67,7 @@
   --radius: 1.25rem;
   --scene-space: clamp(4rem, 12vh, 8rem);
 
-  /* Runtime values written by engine.js */
+  /* Runtime values written by scroll-engine.js */
   --water-top: #61bdaf;
   --water-bottom: #26b7cd;
   --progress: 0;
@@ -3561,7 +3561,7 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
   gap: 4px;
 }
 
-/* When the full menu fits in one row (js/ui/navfit.js adds .navbar-expand), the links spread across
+/* When the full menu fits in one row (js/ui/menu-fit.js adds .navbar-expand), the links spread across
    the whole bar between the brand and the tools. When it does not fit, it folds behind the menu button. */
 .site-nav.navbar-expand .nav-tools {
   order: 3;
