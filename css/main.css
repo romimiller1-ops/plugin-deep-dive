@@ -1159,20 +1159,6 @@ pre {
   color: var(--bad-ink);
 }
 
-@media (max-width: 575.98px) {
-  .dock--level-1 {
-    margin-left: 0.5rem;
-  }
-
-  .dock--level-2 {
-    margin-left: 1rem;
-  }
-
-  .dock--level-3 {
-    margin-left: 1.5rem;
-  }
-}
-
 .wreck__details {
   display: grid;
   gap: 0.5rem;
@@ -4661,4 +4647,78 @@ html:not(.js) [data-track-only]:not([data-track-only~="first"]):not([data-track-
   padding: 4px 10px;
   font-size: 20px;
   border-color: var(--white);
+}
+
+/* ---------- Phones: keep words whole ----------
+   On a narrow screen, space is trimmed first so names fit on one line; a line then breaks only at a space or
+   a hyphen. A break inside a word stays only as a last resort (break-word), so nothing runs off the screen.
+   Wider screens keep their layout. */
+@media (max-width: 575.98px) {
+  .depth-hud__path,
+  .fname,
+  .file-chip,
+  .fields code,
+  .desc-line code,
+  .cable__line,
+  .pathbreak__line {
+    overflow-wrap: break-word;
+  }
+
+  /* Nested boxes: thinner padding, so the text inside keeps most of the screen width. */
+  .panel {
+    padding: 1rem;
+  }
+
+  .mission,
+  .quick-check {
+    padding: 0.75rem;
+  }
+
+  /* Answer cards: the answer reads as one sentence next to its radio circle, instead of a column per word. */
+  .quick-check .option-btn {
+    display: block;
+    position: relative;
+    padding-inline: 2.25rem 0.5rem;
+  }
+
+  .quick-check .btn-check + .option-btn::before {
+    position: absolute;
+    inset-inline-start: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Folder tree: smaller steps between levels and tighter chips leave room for whole file names. */
+  .dock {
+    padding: 0.375rem;
+  }
+
+  .dock--level-1 {
+    margin-left: 0.375rem;
+  }
+
+  .dock--level-2 {
+    margin-left: 0.75rem;
+  }
+
+  .dock--level-3 {
+    margin-left: 1.125rem;
+  }
+
+  .file-chip {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding-inline: 0.5rem;
+  }
+
+  /* The "לתיקון" badge never splits: if it does not fit beside the name, it moves below it. */
+  .file-chip__flag {
+    margin-inline-start: 0;
+    padding-inline: 0.375rem;
+    white-space: nowrap;
+  }
+
+  .cable__line {
+    padding-inline: 0.5rem;
+  }
 }
